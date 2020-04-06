@@ -1,0 +1,14 @@
+book_filename: "dsfba_hw3_report"
+
+before_chapter_script: "scripts/setup.R"
+
+# new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+  "report/introduction.Rmd",
+  "report/eda.Rmd",
+  "report/swiss_model.Rmd",
+  "report/many_models.Rmd",
+  "report/references.Rmd"
+]

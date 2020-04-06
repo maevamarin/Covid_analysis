@@ -1,0 +1,75 @@
+# Introduction
+
+## The data
+
+```{r data}
+# all the files from the data folder
+files <- "data" %>%
+  here::here() %>%
+  list.files(full.names = TRUE)
+
+# latest data file
+latest_data <- files %>%
+  str_subset("jh_covid19_data") %>%
+  str_extract("\\d{4}-\\d{2}-\\d{2}") %>%
+  max(na.rm = TRUE)
+
+# load the latest data
+covid19_data <- files %>%
+  str_subset("jh_covid19_data") %>%
+  str_subset(latest_data) %>%
+  read_csv()
+
+# load the worldbank data
+worldbank_data <- files %>%
+  str_subset("jh_add_wbank_data") %>%
+  read_csv()
+
+# join the covid19 and worldbank datasets
+covid19_data <- covid19_data %>%
+  inner_join(
+    worldbank_data,
+    by = "iso3c"
+  )
+```
+
+For this assignment, we use COVID-19 data provided by [Johns Hopkins University (updated daily)](https://github.com/CSSEGISandData/COVID-19), as well as 
+data from the world bank with demographic information.
+More specifically, we use daily records of total confirmed infection cases (or cumulative number of cases), total number of fatalities (or cumulative number of deaths) per country starting from `r min(covid19_data$date)` until `r max(covid19_data$date)`. 
+The dataset, downloaded on `r latest_data`, contains `r format(nrow(covid19_data), big.mark = ",")` observations and `r ncol(covid19_data)` variables (`r names(covid19_data)`).
+<!-- Further, we have access to world bank data with `r nrow(worldbank_data)` rows and `r ncol(worldbank_data)` columns (`r names(worldbank_data)`) with demographic information per country. -->
+
+## A note on Epidemiological Models
+
+Today's epidemiological models are mostly described by so called __*SIR*__-like models [see details in @Martcheva2015, pp.9--12]. In this class of models, the population is divided into three groups:
+
+* *(__S__)usceptible* --- people, might get infected;
+* *(__I__)nfectious* --- people, who carry the infection and can infect others;
+* *(__R__)ecovered/(__R__)emoved* --- people, who have already recovered from the disease and got immunity.
+
+The SIR model is a system of ordinary nonlinear differential equations. In this homework, we focus on the following *logistic* model [see @Batista2020, pp. 2; @Martcheva2015, pp. 35--36]:
+
+\[
+  \frac{dC(t)}{dt} = r \, C(t) \cdot \left[1 - \frac{C(t)}{K}\right],
+\]
+
+where $C(t)$ is the accumulated number of cases at time $t$, $r$ is the growth rate (or infection rate), and $K$ is the final size of epidemic.
+Let $C_0$ be the initial number of cases: in other words, at time $t = 0$, assume that there was $C_0$ accumulated number of cases.
+The solution of the *logistic* model is
+
+\[
+  C(t) = \frac{K\cdot C_0}{C_0 + (K-C_0) \, \exp(-r\,t)},
+\]
+
+which looks like a scaled *logit* model in econometrics.
+
+## This assigment
+
+Because we only have access to the confirmed cases that are reported, we use those figures as a proxy for the total number of cases, with the understanding that they almost surely underestimates the actual number of interest.
+In what follows, we do a preliminary exploration of the data.
+We then use the *logistic* model to analyze the spread of __COVID-19__ and try to predict the final number of accumulated confirmed cases for every country. 
+More specifically, we
+
+* start by focusing on modelling the spread in Switzerland;
+* then apply the same approach to every country in the dataset.
+

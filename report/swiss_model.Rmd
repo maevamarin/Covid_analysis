@@ -1,0 +1,51 @@
+# Modeling the spread of COVID-19 in a single country
+
+## The logistic model in R
+
+Using the filtered dataset, we study the spread of COVID-19 with the logistic model.
+Letting $C_{i}(t) = C_{d_{0,i} + t,i}$, the model for country $i$ can be expressed as:
+
+\[
+  C_{i}(t) = \frac{K_{i} \cdot C_{i}(0)}{C_{i}(0) + (K_{i}-C_{i}(0)) \, \exp(-R_{i}\,t)}
+\]
+
+The goal is to find the final number of cases $K_{i}$ and the infection rate $R_{i}$. We implement this in R using the following function:
+
+```{r, echo = TRUE}
+# here, we assume that data is a data frame with two variables
+#  - t: the number of event days
+#  - confirmed: the number of confirmed cases at time t
+logistic_model <- function(data) {
+  data <- data %>% arrange(t)
+  C_0 <- data$confirmed[1]
+  C_max <- data$confirmed[nrow(data)]
+  nls(
+    formula = confirmed ~ K / (1 + ((K - C_0) / C_0) * exp(-R * t)),
+    data = data,
+    start = list(K = 2 * C_max, R = 0.5),
+    control = nls.control(minFactor = 1e-6, maxiter = 100)
+  )
+}
+```
+
+Notice:
+
+* We use the nonlinear least square method `stats::nls` to fit the unknown parameters.
+* In R, the formula above is `confirmed ~ K / (1 + ((K - C_0)/C_0) * exp(-R * t))`.
+* As starting point $(K_0, R_0)$ for the optimiser, we set $R_0 = 0.5$ and $K_0 = 2 \, C(t^*)$, where $t^*$ is the latest information about accumulated confirmed cases.
+* We further set the `control` argument as `nls.control(minFactor = 1e-6, maxiter = 100)`.
+
+## The logistic model applied to data from Switzerland
+
+From `covid19_data_filtered`, extract a table `covid19_ch` which corresponds to data for Switzerland.
+Then:
+
+* Use the function above to fit the logistic model for Switzerland
+* Describe its output (fitted parameters, `broom::tidy()` might be useful here)
+* Discuss the goodness-of-fit.
+* Plot the fitted curve, as well as observed data points. 
+* Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?
+
+```{r}
+## your code goes here
+```

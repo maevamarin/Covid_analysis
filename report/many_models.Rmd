@@ -1,0 +1,30 @@
+# Modeling the spread of COVID-19 worldwide
+
+In this section, we fit the logistic model to every country in the `covid19_data_filtered` dataset.
+
+## Fitting the logistic model to every country
+
+Use nested data, list-columns and `logistic_model` to fit the logistic model to every country in the dataset.
+Because, for some countries, the optimization method might not converge, you can use `possibly()` or something similar.
+For which country does the optimization fail ?
+Assess the goodness-of-fit of the logistic model in the various countries.
+
+```{r}
+## your code goes here
+```
+
+## Fitted parameters and long-term predictions
+
+Describe the fitted parameters (i.e., the final size and the infection rates), both on a per-country basis and some aggregate numbers (e.g., total size of the epidemic over all considered countries).
+Furthermore, study the evolution (say for $t$ from 0 to 50) of the predictions of the number of confirmed cases from your models.
+Similarly as was discussed in the last sub-section of the exploratory data analysis, the number of confirmed cases per 100,000 habitants is also important to understand how specific countries are managing the spread of the epidemic.
+Thus, predict the evolution of this number (i.e., by dividing your predictions for confirmed cases by the population size) and discuss.
+
+Hints:
+
+* Format the fitted parameters using `broom::tidy()`.
+* For the long-term predictions, you can use `data = data.frame(t = 0:50)` in `add_predictions()`.
+
+```{r}
+## your code goes here
+```

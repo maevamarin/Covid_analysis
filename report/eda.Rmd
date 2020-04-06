@@ -1,0 +1,57 @@
+# Exploratory data analysis
+
+## Description of the state of the spread
+
+Provide a high level description of the state of the spread. In particular, include
+
+  * the number of days that have passed since the first confirmed case/death,
+  * the current stage for confirmed cases/deaths/mortality (i.e., ratio of deaths to confirmed cases).
+  
+You can:
+
+  * use either words, or tables, or figures, or a bit of each,
+  * group your analysis per country, or region, or a bit of each.
+
+```{r}
+## your code goes here
+```
+
+
+## Worldwide map
+
+Produce a worlwide map of the __COVID-19__ spread at the latest date available in `covid19_data` for each country, and describe what you see.
+
+Hint: `ggplot2` package includes two helpful command for this part, namely
+
+  * `map_data()` to retrieve a map,
+  * and `geom_map()` to draw a map on a plot.
+  
+Use `expand_limits` to make sure you display the whole map of the world.
+
+```{r}
+## your code goes here
+```
+
+## Data selection and alignment
+
+
+To compare the speed of the infection spread between countries, we need to "align" the data. In other words, we model the epidemic using equivalent "starting conditions" for every country. To do that, we filter the data so that the number of confirmed cases (in any country) is greater or equal to the maximal number of confirmed cases at the first day of a specific country. 
+
+Let $C_{d, i}$ be the number of accumulated confirmed cases on day $d$ for country $i$. Let country $k$ be the one such that it had the highest number of reported cases on the first day in the dataset, that is $C_{1, k} \geq C_{1, i}$ for any other $i$. Find $k$ and discuss.
+
+From `covid19_data`, extract a new table `covid19_data_filtered`:
+
+* Select only the countries $i$, which on some day $d_{0,i}$ have $C_{d_{0,i}, i} \geq C_{0, k}$. We will call this time $d_{0,i}$ a day-zero for country $i$. In the next sections, we model $C_i(t) = C_{d_{0,i} + t,i}$, that is the spread of the epidemic in country $i$ with $t$ representing "event days". Remember, for every country the day-zero is, in general, different. However, when a country entered the epidemic stage, we are only interested in number of days that has passed from the date of entry (i.e. day-zero).
+* Remove countries who are left with less than two weeks of data, i.e. we keep those countries whose number of days that has passed from the day-zero of this country is 14 or more. 
+* Create a new column called `t` representing the number of days from the day-zero of this country.
+* Create a new column called `confirmed_1e5pop` representing the number of confirmed cases per 100,000 habitants. This is useful in order to compare how the spread of the epidemic differs between countries relative to their population.
+
+Discuss using either tables or visualizations or both: 
+
+* Which countries are left in `covid19_data_filtered`?
+* What is the state of the spread there?
+* What is the relationship between `t` and `confirmed_1e5pop`?
+
+```{r}
+## your code goes here
+```
