@@ -47,5 +47,20 @@ Then:
 * Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?
 
 ```{r}
-## your code goes here
+covid19_ch <- covid19_data_filtered %>% filter(country=="Switzerland")
+broom::tidy(logistic_model(covid19_ch))
+augment_model <-broom::augment(logistic_model(covid19_ch))
+broom::augment(logistic_model(covid19_ch)) %>% print(n=10)
+
+
+augment_model %>% ggplot() +
+  geom_line(aes(x=t, y= confirmed, col="Observed")) +
+  geom_line(aes(x=t, y= .fitted, col="Fitted" )) +
+  labs(title = "Well goodness-of fit", subtitle = "Between the observed and fitted value", x= "Time period",y= "Confirmed people", col= "Model")
+
+##Present the prediction
+
+plot(logistic_model(covid19_ch))
+
+
 ```

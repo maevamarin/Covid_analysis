@@ -1,6 +1,6 @@
 --- 
 title: "Homework 3 : the spread of COVID-19"
-author: "Name I, First Name I and Name II, First Name II"
+author: "Mathieu Eugénie, Marin Maeva"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 site: bookdown::bookdown_site
 output: bookdown::html_document2

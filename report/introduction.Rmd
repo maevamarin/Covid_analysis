@@ -3,6 +3,7 @@
 ## The data
 
 ```{r data}
+library(tidyverse)
 # all the files from the data folder
 files <- "data" %>%
   here::here() %>%
