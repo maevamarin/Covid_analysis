@@ -10,13 +10,14 @@ For which country does the optimization fail ?
 Assess the goodness-of-fit of the logistic model in the various countries.
 
 ```{r}
-stats::nls
 
-
-by_country <- covid19_data_filtered_2 %>% group_by(country) %>% nest()
+by_country <- covid19_data_filtered %>% group_by(country) %>% nest()
 
 tmp <- by_country %>%
-  mutate(log_model = purrr::map(data, possibly(logistic_model, NA)))
+  mutate(log_model = purrr::map(data, possibly(logistic_model, NA))) %>% 
+  filter(!is.na(log_model))
+
+
 fitted_model <- tmp %>% mutate(aug = purrr::map(log_model, augment)) %>% unnest(aug)
 tmp %>% mutate(tdy = purrr::map(log_model, tidy)) %>% unnest(tdy)
 # models <- map(by_country$data, possibly(logistic_model, NA))

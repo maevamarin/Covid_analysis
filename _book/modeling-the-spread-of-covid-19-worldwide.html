@@ -21,7 +21,7 @@
   
   
 
-<meta name="author" content="Name I, First Name I and Name II, First Name II" />
+<meta name="author" content="Mathieu Eugénie, Marin Maeva" />
 
 
 
@@ -49,6 +49,7 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -134,8 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory data analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#description-of-the-state-of-the-spread"><i class="fa fa-check"></i><b>3.1</b> Description of the state of the spread</a></li>
-<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#worldwide-map"><i class="fa fa-check"></i><b>3.2</b> Worldwide map</a></li>
-<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>3.3</b> Data selection and alignment</a></li>
+<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>3.2</b> Data selection and alignment</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html"><i class="fa fa-check"></i><b>4</b> Modeling the spread of COVID-19 in a single country</a><ul>
 <li class="chapter" data-level="4.1" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-in-r"><i class="fa fa-check"></i><b>4.1</b> The logistic model in R</a></li>
@@ -172,6 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Because, for some countries, the optimization method might not converge, you can use <code>possibly()</code> or something similar.
 For which country does the optimization fail ?
 Assess the goodness-of-fit of the logistic model in the various countries.</p>
+<pre><code>#&gt; # A tibble: 68 x 8
+#&gt; # Groups:   country [34]
+#&gt;    country data  log_model term  estimate std.error statistic
+#&gt;    &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;    &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 Austra~ &lt;tib~ &lt;nls&gt;     K      6.14e+3   6.03e+1    102.  
+#&gt;  2 Austra~ &lt;tib~ &lt;nls&gt;     R      2.62e-1   2.52e-3    104.  
+#&gt;  3 Austria &lt;tib~ &lt;nls&gt;     K      1.30e+4   1.02e+2    127.  
+#&gt;  4 Austria &lt;tib~ &lt;nls&gt;     R      2.50e-1   1.62e-3    154.  
+#&gt;  5 Belgium &lt;tib~ &lt;nls&gt;     K      2.74e+4   7.93e+2     34.6 
+#&gt;  6 Belgium &lt;tib~ &lt;nls&gt;     R      2.08e-1   1.90e-3    109.  
+#&gt;  7 Brazil  &lt;tib~ &lt;nls&gt;     K      1.98e+4   2.15e+3      9.19
+#&gt;  8 Brazil  &lt;tib~ &lt;nls&gt;     R      2.17e-1   5.92e-3     36.7 
+#&gt;  9 Canada  &lt;tib~ &lt;nls&gt;     K      2.25e+4   1.24e+3     18.1 
+#&gt; 10 Canada  &lt;tib~ &lt;nls&gt;     R      2.33e-1   4.02e-3     57.9 
+#&gt; # ... with 58 more rows, and 1 more variable: p.value &lt;dbl&gt;</code></pre>
+<p><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="fitted-parameters-and-long-term-predictions" class="section level2">
 <h2><span class="header-section-number">5.2</span> Fitted parameters and long-term predictions</h2>

@@ -8,6 +8,7 @@ documentclass: book
 bibliography: [references.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
+always_allow_html: true
 ---
 
 # Basic instructions

@@ -21,7 +21,7 @@
   
   
 
-<meta name="author" content="Name I, First Name I and Name II, First Name II" />
+<meta name="author" content="Mathieu Eugénie, Marin Maeva" />
 
 
 
@@ -49,6 +49,7 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -134,8 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory data analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#description-of-the-state-of-the-spread"><i class="fa fa-check"></i><b>3.1</b> Description of the state of the spread</a></li>
-<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#worldwide-map"><i class="fa fa-check"></i><b>3.2</b> Worldwide map</a></li>
-<li class="chapter" data-level="3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>3.3</b> Data selection and alignment</a></li>
+<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>3.2</b> Data selection and alignment</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html"><i class="fa fa-check"></i><b>4</b> Modeling the spread of COVID-19 in a single country</a><ul>
 <li class="chapter" data-level="4.1" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-in-r"><i class="fa fa-check"></i><b>4.1</b> The logistic model in R</a></li>
@@ -173,20 +173,20 @@ Letting <span class="math inline">\(C_{i}(t) = C_{d_{0,i} + t,i}\)</span>, the m
   C_{i}(t) = \frac{K_{i} \cdot C_{i}(0)}{C_{i}(0) + (K_{i}-C_{i}(0)) \, \exp(-R_{i}\,t)}
 \]</span></p>
 <p>The goal is to find the final number of cases <span class="math inline">\(K_{i}\)</span> and the infection rate <span class="math inline">\(R_{i}\)</span>. We implement this in R using the following function:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># here, we assume that data is a data frame with two variables</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#  - t: the number of event days</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#  - confirmed: the number of confirmed cases at time t</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">logistic_model &lt;-<span class="st"> </span><span class="cf">function</span>(data) {</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(t)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  C_<span class="dv">0</span> &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  C_max &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="kw">nrow</span>(data)]</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="kw">nls</span>(</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="dt">formula =</span> confirmed <span class="op">~</span><span class="st"> </span>K <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>((K <span class="op">-</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R <span class="op">*</span><span class="st"> </span>t)),</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="dt">data =</span> data,</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">K =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C_max, <span class="dt">R =</span> <span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="dt">control =</span> <span class="kw">nls.control</span>(<span class="dt">minFactor =</span> <span class="fl">1e-6</span>, <span class="dt">maxiter =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  )</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># here, we assume that data is a data frame with two variables</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#  - t: the number of event days</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#  - confirmed: the number of confirmed cases at time t</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">logistic_model &lt;-<span class="st"> </span><span class="cf">function</span>(data) {</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(t)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  C_<span class="dv">0</span> &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  C_max &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="kw">nrow</span>(data)]</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  <span class="kw">nls</span>(</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">formula =</span> confirmed <span class="op">~</span><span class="st"> </span>K <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>((K <span class="op">-</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R <span class="op">*</span><span class="st"> </span>t)),</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="dt">data =</span> data,</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">K =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C_max, <span class="dt">R =</span> <span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    <span class="dt">control =</span> <span class="kw">nls.control</span>(<span class="dt">minFactor =</span> <span class="fl">1e-6</span>, <span class="dt">maxiter =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">  )</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">}</a></code></pre></div>
 <p>Notice:</p>
 <ul>
 <li>We use the nonlinear least square method <code>stats::nls</code> to fit the unknown parameters.</li>
@@ -206,6 +206,26 @@ Then:</p>
 <li>Plot the fitted curve, as well as observed data points.</li>
 <li>Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?</li>
 </ul>
+<pre><code>#&gt; # A tibble: 2 x 5
+#&gt;   term   estimate std.error statistic  p.value
+#&gt;   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 K     21542.    373.           57.7 2.91e-27
+#&gt; 2 R         0.246   0.00316      77.9 2.28e-30
+#&gt; # A tibble: 26 x 5
+#&gt;        t confirmed   C_0 .fitted .resid
+#&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1     0       652   652    652     0  
+#&gt;  2     1       652   652    827. -175. 
+#&gt;  3     2      1139   652   1046.   92.8
+#&gt;  4     3      1359   652   1320.   39.0
+#&gt;  5     4      2200   652   1660.  540. 
+#&gt;  6     5      2200   652   2078.  122. 
+#&gt;  7     6      2700   652   2588.  112. 
+#&gt;  8     7      3028   652   3202. -174. 
+#&gt;  9     8      4075   652   3932.  143. 
+#&gt; 10     9      5294   652   4785.  509. 
+#&gt; # ... with 16 more rows</code></pre>
+<p><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-10-2.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

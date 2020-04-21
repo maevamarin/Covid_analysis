@@ -116,7 +116,7 @@ covid19_data %>% group_by(date) %>% summarize(Mean_Ratio = mean(ratio)) %>% ggpl
 covid19_data <- covid19_data %>% mutate(ratio_pop=(confirmed/population))
 covid19_data$ratio[is.nan(covid19_data$ratio)]<-0
 
- covid19_data %>% group_by(date,region) %>% summarize(Mean_ratio_pop = mean(ratio_pop)) %>%
+covid19_data %>% group_by(date,region) %>% summarize(Mean_ratio_pop = mean(ratio_pop)) %>%
     ggplot(aes(x=date, y= Mean_ratio_pop, colour= region)) +
   geom_line()+
   labs(title = "Europe & Central Asia \nhas the higest confirmed case by the population", subtitle = "Worldwide representation groupy by region", x= "Date",y= "Confirmed /Population", caption = "data from jh_covid19_data_2020-04-06.csv") +
@@ -184,7 +184,6 @@ covid19_data %>%
 ```
 
 ```{r}
-
 
 
 # Filtering the data to obtain a subset containing only the first cases reported in the countries
