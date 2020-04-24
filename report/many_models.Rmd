@@ -11,21 +11,40 @@ Assess the goodness-of-fit of the logistic model in the various countries.
 
 ```{r}
 
-by_country <- covid19_data_filtered %>% group_by(country) %>% nest()
+by_country <- covid19_data_filtered %>%
+              group_by(country) %>%
+              nest()
 
 tmp <- by_country %>%
-  mutate(log_model = purrr::map(data, possibly(logistic_model, NA))) %>% 
-  filter(!is.na(log_model))
+         mutate(log_model = purrr::map(data, possibly(logistic_model, NA))) %>%   filter(!is.na(log_model))
 
 
-fitted_model <- tmp %>% mutate(aug = purrr::map(log_model, augment)) %>% unnest(aug)
-tmp %>% mutate(tdy = purrr::map(log_model, tidy)) %>% unnest(tdy)
-# models <- map(by_country$data, possibly(logistic_model, NA))
-# models
+fitted_model <- tmp %>% 
+                mutate(aug = purrr::map(log_model, augment)) %>%
+                 unnest(aug)
 
-fitted_model %>% ggplot(aes(t,.resid)) +
-  geom_line(aes(colour=country), alpha=1/3)
-  
+tmp %>%
+  mutate(tdy = purrr::map(log_model, tidy)) %>%
+  unnest(tdy) %>%
+  select(country,term,estimate,std.error) %>%
+  kable(
+    caption = "List of the first countries touched by the pandemia."
+       ) %>%
+  kable_styling(
+    bootstrap_options = "striped")
+
+fitted_model %>%
+  ggplot(aes(t,.resid)) +
+  geom_line(aes(colour=country), alpha=1/3) +
+  labs(
+    title = "Increase of the error with the time dimension",
+    subtitle = "Prediction of the evolution - COVID-19",
+    x= "Time dimension(day)",
+    y="Residuals",
+    colour="Country"
+  )
+
+
 ## In the model, we don't  find the Japan
 
 
@@ -44,5 +63,58 @@ Hints:
 * For the long-term predictions, you can use `data = data.frame(t = 0:50)` in `add_predictions()`.
 
 ```{r}
-## your code goes here
+fitted_model_2<- fitted_model %>% filter(t<=50)
+
+best_in_each_fitted <- fitted_model_2 %>%
+                      group_by(country) %>% filter(row_number(desc(.fitted ))==1) 
+
+
+fitted_model_2 %>%
+  ggplot(aes(t,.fitted)) +
+  geom_line(aes(colour=country),alpha=1/3) +
+  labs( 
+    title = "Exponential confirmed case prediction for the USA",
+    subtitle ="Prediction of the evolution COVID-19",
+    x= "Day",
+    y="Prediction for the confirmed case") 
+
+
+fitted_model_2 %>%
+  ggplot(aes(t,.fitted)) +
+  geom_line(aes(colour=country),alpha=1/3) +
+  geom_text(aes(label=country), data = best_in_each_fitted) +
+  labs( 
+    title = "Exponential confirmed case prediction for the USA",
+    subtitle ="Prediction of the evolution COVID-19",
+    x= "Day",
+    y="Prediction for the confirmed case") 
+
+
+
+## Same analysis but relative to the population
+
+
+
+joined<-left_join(
+  covid19_data_filtered %>% select(population,country),
+  fitted_model_2 %>% select(-data,-log_model),
+  by= "country"
+  ) %>%
+  mutate(ratio_pop =.fitted /population)
+
+best_in_each <- joined_4 %>%
+                group_by(country) %>%
+                filter(row_number(desc(ratio_pop))==1)
+
+joined %>% ggplot(aes(t,ratio_pop))+
+  geom_line(aes(colour=country),alpha=1/3)+
+  geom_text(aes(label=country), data = best_in_each)+
+  labs(
+    title = "Luxembourg and Icelan \nexponential curve for the COVID-19",
+    subtile ="Prediction for the confirmed case relative \n to the population",
+    x= "Day",
+    y="Prediction of the confirmed case/Population",
+    colour="Country"
+    ) 
+
 ```

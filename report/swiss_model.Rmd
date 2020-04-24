@@ -52,6 +52,9 @@ broom::tidy(logistic_model(covid19_ch))
 augment_model <-broom::augment(logistic_model(covid19_ch))
 broom::augment(logistic_model(covid19_ch)) %>% print(n=10)
 
+augment_model <-broom::augment(logistic_model(covid19_ch))
+##The prediction shows that the final size of the confirmed case is about 21'500 cases, with an infection rate of 0.246%.
+
 
 augment_model %>% ggplot() +
   geom_line(aes(x=t, y= confirmed, col="Observed")) +

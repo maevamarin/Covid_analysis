@@ -21,3 +21,4 @@ kableExtra
 bookdown
 rmarkdown
 gapminder
+cowplot

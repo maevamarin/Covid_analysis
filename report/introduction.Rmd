@@ -2,7 +2,8 @@
 
 ## The data
 
-```{r data}
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
+
 library(tidyverse)
 # all the files from the data folder
 files <- "data" %>%
@@ -32,6 +33,17 @@ covid19_data <- covid19_data %>%
     worldbank_data,
     by = "iso3c"
   )
+```
+
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
+##load the library
+library(tidyverse)
+library(kableExtra)
+library(readr)
+library(stats)
+library(lubridate)
+library(cowplot)
+
 ```
 
 For this assignment, we use COVID-19 data provided by [Johns Hopkins University (updated daily)](https://github.com/CSSEGISandData/COVID-19), as well as 
