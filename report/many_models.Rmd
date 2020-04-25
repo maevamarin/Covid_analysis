@@ -102,7 +102,7 @@ joined<-left_join(
   ) %>%
   mutate(ratio_pop =.fitted /population)
 
-best_in_each <- joined_4 %>%
+best_in_each <- joined %>%
                 group_by(country) %>%
                 filter(row_number(desc(ratio_pop))==1)
 
