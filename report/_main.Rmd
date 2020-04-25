@@ -72,7 +72,8 @@ geom_line(aes(x=date, y=Deaths, col="Deaths")) +
        subtitle = "Worldwide representation",
        x= "Date",
        y= "People",
-       caption = "data from jh_covid19_data_2020-04-06.csv")
+       caption = "data from jh_covid19_data_2020-04-06.csv",
+       col="Variables")
 ```
 
 
