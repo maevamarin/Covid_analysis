@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19</title>
-  <meta name="description" content="4 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
+  <title>3 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19</title>
+  <meta name="description" content="3 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
+  <meta property="og:title" content="3 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
+  <meta name="twitter:title" content="3 Modeling the spread of COVID-19 in a single country | Homework 3 : the spread of COVID-19" />
   
   
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exploratory-data-analysis.html"/>
+<link rel="prev" href="introduction.html"/>
 <link rel="next" href="modeling-the-spread-of-covid-19-worldwide.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -132,18 +132,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#the-data"><i class="fa fa-check"></i><b>2.1</b> The data</a></li>
 <li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#a-note-on-epidemiological-models"><i class="fa fa-check"></i><b>2.2</b> A note on Epidemiological Models</a></li>
 <li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#this-assigment"><i class="fa fa-check"></i><b>2.3</b> This assigment</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#description-of-the-state-of-the-spread"><i class="fa fa-check"></i><b>2.4</b> Description of the state of the spread</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>2.5</b> Data selection and alignment</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Exploratory data analysis</a><ul>
-<li class="chapter" data-level="3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#description-of-the-state-of-the-spread"><i class="fa fa-check"></i><b>3.1</b> Description of the state of the spread</a></li>
-<li class="chapter" data-level="3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-selection-and-alignment"><i class="fa fa-check"></i><b>3.2</b> Data selection and alignment</a></li>
+<li class="chapter" data-level="3" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html"><i class="fa fa-check"></i><b>3</b> Modeling the spread of COVID-19 in a single country</a><ul>
+<li class="chapter" data-level="3.1" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-in-r"><i class="fa fa-check"></i><b>3.1</b> The logistic model in R</a></li>
+<li class="chapter" data-level="3.2" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-applied-to-data-from-switzerland"><i class="fa fa-check"></i><b>3.2</b> The logistic model applied to data from Switzerland</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html"><i class="fa fa-check"></i><b>4</b> Modeling the spread of COVID-19 in a single country</a><ul>
-<li class="chapter" data-level="4.1" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-in-r"><i class="fa fa-check"></i><b>4.1</b> The logistic model in R</a></li>
-<li class="chapter" data-level="4.2" data-path="modeling-the-spread-of-covid-19-in-a-single-country.html"><a href="modeling-the-spread-of-covid-19-in-a-single-country.html#the-logistic-model-applied-to-data-from-switzerland"><i class="fa fa-check"></i><b>4.2</b> The logistic model applied to data from Switzerland</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html"><i class="fa fa-check"></i><b>5</b> Modeling the spread of COVID-19 worldwide</a><ul>
-<li class="chapter" data-level="5.1" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html#fitting-the-logistic-model-to-every-country"><i class="fa fa-check"></i><b>5.1</b> Fitting the logistic model to every country</a></li>
-<li class="chapter" data-level="5.2" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html#fitted-parameters-and-long-term-predictions"><i class="fa fa-check"></i><b>5.2</b> Fitted parameters and long-term predictions</a></li>
+<li class="chapter" data-level="4" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html"><i class="fa fa-check"></i><b>4</b> Modeling the spread of COVID-19 worldwide</a><ul>
+<li class="chapter" data-level="4.1" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html#fitting-the-logistic-model-to-every-country"><i class="fa fa-check"></i><b>4.1</b> Fitting the logistic model to every country</a></li>
+<li class="chapter" data-level="4.2" data-path="modeling-the-spread-of-covid-19-worldwide.html"><a href="modeling-the-spread-of-covid-19-worldwide.html#fitted-parameters-and-long-term-predictions"><i class="fa fa-check"></i><b>4.2</b> Fitted parameters and long-term predictions</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -164,9 +162,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="modeling-the-spread-of-covid-19-in-a-single-country" class="section level1">
-<h1><span class="header-section-number">4</span> Modeling the spread of COVID-19 in a single country</h1>
+<h1><span class="header-section-number">3</span> Modeling the spread of COVID-19 in a single country</h1>
 <div id="the-logistic-model-in-r" class="section level2">
-<h2><span class="header-section-number">4.1</span> The logistic model in R</h2>
+<h2><span class="header-section-number">3.1</span> The logistic model in R</h2>
 <p>Using the filtered dataset, we study the spread of COVID-19 with the logistic model.
 Letting <span class="math inline">\(C_{i}(t) = C_{d_{0,i} + t,i}\)</span>, the model for country <span class="math inline">\(i\)</span> can be expressed as:</p>
 <p><span class="math display">\[
@@ -196,7 +194,7 @@ Letting <span class="math inline">\(C_{i}(t) = C_{d_{0,i} + t,i}\)</span>, the m
 </ul>
 </div>
 <div id="the-logistic-model-applied-to-data-from-switzerland" class="section level2">
-<h2><span class="header-section-number">4.2</span> The logistic model applied to data from Switzerland</h2>
+<h2><span class="header-section-number">3.2</span> The logistic model applied to data from Switzerland</h2>
 <p>From <code>covid19_data_filtered</code>, extract a table <code>covid19_ch</code> which corresponds to data for Switzerland.
 Then:</p>
 <ul>
@@ -225,7 +223,7 @@ Then:</p>
 #&gt;  9     8      4075   652   3932.  143. 
 #&gt; 10     9      5294   652   4785.  509. 
 #&gt; # ... with 16 more rows</code></pre>
-<p><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-10-2.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /><img src="dsfba_hw3_report_files/figure-html/unnamed-chunk-12-2.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
@@ -234,7 +232,7 @@ Then:</p>
           </div>
         </div>
       </div>
-<a href="exploratory-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="modeling-the-spread-of-covid-19-worldwide.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
