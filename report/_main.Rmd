@@ -298,3 +298,46 @@ The countries removed of our panel due to our filtering are 39: Algeria, Argenti
 The countries included in the filtered data are 28 : Australia, Austria, Belgium, Brazil, Canada, China, Czechia, Denmark, France, Germany, Iran, Ireland, Israel, Italy, Japan, South Korea, Luxembourg, Malaysia, Netherlands, Norway, Pakistan, Portugal, Spain, Sweden, Switzerland, Turkey, United Kingdom, USA
 "
 ```
+
+<!--chapter:end:eda.Rmd-->
+
+
+# Introduction
+
+Placeholder
+
+
+## The data
+## A note on Epidemiological Models
+## This assigment
+
+<!--chapter:end:introduction.Rmd-->
+
+
+# Modeling the spread of COVID-19 worldwide
+
+Placeholder
+
+
+## Fitting the logistic model to every country
+## Fitted parameters and long-term predictions
+
+<!--chapter:end:many_models.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:references.Rmd-->
+
+
+# Modeling the spread of COVID-19 in a single country
+
+Placeholder
+
+
+## The logistic model in R
+## The logistic model applied to data from Switzerland
+
+<!--chapter:end:swiss_model.Rmd-->
+
