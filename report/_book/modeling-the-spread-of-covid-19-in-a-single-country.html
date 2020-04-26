@@ -171,20 +171,20 @@ Letting <span class="math inline">\(C_{i}(t) = C_{d_{0,i} + t,i}\)</span>, the m
   C_{i}(t) = \frac{K_{i} \cdot C_{i}(0)}{C_{i}(0) + (K_{i}-C_{i}(0)) \, \exp(-R_{i}\,t)}
 \]</span></p>
 <p>The goal is to find the final number of cases <span class="math inline">\(K_{i}\)</span> and the infection rate <span class="math inline">\(R_{i}\)</span>. We implement this in R using the following function:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># here, we assume that data is a data frame with two variables</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#  - t: the number of event days</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#  - confirmed: the number of confirmed cases at time t</span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">logistic_model &lt;-<span class="st"> </span><span class="cf">function</span>(data) {</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5">  data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(t)</a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">  C_<span class="dv">0</span> &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb25-7" data-line-number="7">  C_max &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="kw">nrow</span>(data)]</a>
-<a class="sourceLine" id="cb25-8" data-line-number="8">  <span class="kw">nls</span>(</a>
-<a class="sourceLine" id="cb25-9" data-line-number="9">    <span class="dt">formula =</span> confirmed <span class="op">~</span><span class="st"> </span>K <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>((K <span class="op">-</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R <span class="op">*</span><span class="st"> </span>t)),</a>
-<a class="sourceLine" id="cb25-10" data-line-number="10">    <span class="dt">data =</span> data,</a>
-<a class="sourceLine" id="cb25-11" data-line-number="11">    <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">K =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C_max, <span class="dt">R =</span> <span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb25-12" data-line-number="12">    <span class="dt">control =</span> <span class="kw">nls.control</span>(<span class="dt">minFactor =</span> <span class="fl">1e-6</span>, <span class="dt">maxiter =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb25-13" data-line-number="13">  )</a>
-<a class="sourceLine" id="cb25-14" data-line-number="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># here, we assume that data is a data frame with two variables</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#  - t: the number of event days</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#  - confirmed: the number of confirmed cases at time t</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">logistic_model &lt;-<span class="st"> </span><span class="cf">function</span>(data) {</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">  data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(t)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">  C_<span class="dv">0</span> &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">  C_max &lt;-<span class="st"> </span>data<span class="op">$</span>confirmed[<span class="kw">nrow</span>(data)]</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">  <span class="kw">nls</span>(</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">    <span class="dt">formula =</span> confirmed <span class="op">~</span><span class="st"> </span>K <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>((K <span class="op">-</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>C_<span class="dv">0</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>R <span class="op">*</span><span class="st"> </span>t)),</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">    <span class="dt">data =</span> data,</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">    <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">K =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C_max, <span class="dt">R =</span> <span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">    <span class="dt">control =</span> <span class="kw">nls.control</span>(<span class="dt">minFactor =</span> <span class="fl">1e-6</span>, <span class="dt">maxiter =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">  )</a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">}</a></code></pre></div>
 <p>Notice:</p>
 <ul>
 <li>We use the nonlinear least square method <code>stats::nls</code> to fit the unknown parameters.</li>
@@ -204,15 +204,67 @@ Then:</p>
 <li>Plot the fitted curve, as well as observed data points.</li>
 <li>Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?</li>
 </ul>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">covid19_ch &lt;-<span class="st"> </span>covid19_data_filtered <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(country<span class="op">==</span><span class="st">&quot;Switzerland&quot;</span>)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(<span class="kw">logistic_model</span>(covid19_ch))</a></code></pre></div>
-<pre><code>## # A tibble: 2 x 5
-##   term   estimate std.error statistic  p.value
-##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 K     21542.    373.           57.7 2.91e-27
-## 2 R         0.246   0.00316      77.9 2.28e-30</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">augment_model &lt;-broom<span class="op">::</span><span class="kw">augment</span>(<span class="kw">logistic_model</span>(covid19_ch))</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">broom<span class="op">::</span><span class="kw">augment</span>(<span class="kw">logistic_model</span>(covid19_ch)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">n=</span><span class="dv">10</span>)</a></code></pre></div>
+The prediction shows that the final size of the confirmed case is about 21’500 cases, with an infection rate of 0.246%.
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+(#tab:table 3)K = confirmed case, R = Infesction rate
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+2.15e+04
+</td>
+<td style="text-align:right;">
+373.286
+</td>
+<td style="text-align:right;">
+57.7
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+2.46e-01
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+77.9
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 <pre><code>## # A tibble: 26 x 5
 ##        t confirmed   C_0 .fitted .resid
 ##    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -227,19 +279,499 @@ Then:</p>
 ##  9     8      4075   652   3932.  143. 
 ## 10     9      5294   652   4785.  509. 
 ## # ... with 16 more rows</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">augment_model &lt;-broom<span class="op">::</span><span class="kw">augment</span>(<span class="kw">logistic_model</span>(covid19_ch))</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">##The prediction shows that the final size of the confirmed case is about 21&#39;500 cases, with an infection rate of 0.246%.</span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">augment_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>t, <span class="dt">y=</span> confirmed, <span class="dt">col=</span><span class="st">&quot;Observed&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>t, <span class="dt">y=</span> .fitted, <span class="dt">col=</span><span class="st">&quot;Fitted&quot;</span> )) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Well goodness-of fit&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Between the observed and fitted value&quot;</span>, <span class="dt">x=</span> <span class="st">&quot;Time period&quot;</span>,<span class="dt">y=</span> <span class="st">&quot;Confirmed people&quot;</span>, <span class="dt">col=</span> <span class="st">&quot;Model&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co">##Present the prediction</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw">plot</span>(<span class="kw">logistic_model</span>(covid19_ch))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+(#tab:table 4)Presentation of the prediction
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+t
+</th>
+<th style="text-align:right;">
+confirmed
+</th>
+<th style="text-align:right;">
+C_0
+</th>
+<th style="text-align:right;">
+.fitted
+</th>
+<th style="text-align:right;">
+.resid
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+827
+</td>
+<td style="text-align:right;">
+-174.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1139
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+1046
+</td>
+<td style="text-align:right;">
+92.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1359
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+1320
+</td>
+<td style="text-align:right;">
+39.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2200
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+1660
+</td>
+<td style="text-align:right;">
+540.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2200
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+2078
+</td>
+<td style="text-align:right;">
+122.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2700
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+2588
+</td>
+<td style="text-align:right;">
+112.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3028
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+3202
+</td>
+<td style="text-align:right;">
+-174.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+4075
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+3932
+</td>
+<td style="text-align:right;">
+143.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+5294
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+4785
+</td>
+<td style="text-align:right;">
+509.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+6575
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+5762
+</td>
+<td style="text-align:right;">
+813.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+7474
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+6857
+</td>
+<td style="text-align:right;">
+616.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+8795
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+8054
+</td>
+<td style="text-align:right;">
+740.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+9877
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+9328
+</td>
+<td style="text-align:right;">
+549.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+10897
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+10644
+</td>
+<td style="text-align:right;">
+253.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+11811
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+11963
+</td>
+<td style="text-align:right;">
+-152.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+12928
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+13248
+</td>
+<td style="text-align:right;">
+-319.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+14076
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+14462
+</td>
+<td style="text-align:right;">
+-385.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+14829
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+15578
+</td>
+<td style="text-align:right;">
+-749.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+15922
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+16579
+</td>
+<td style="text-align:right;">
+-657.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+16605
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+17456
+</td>
+<td style="text-align:right;">
+-850.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+17768
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+18209
+</td>
+<td style="text-align:right;">
+-441.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+18827
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+18845
+</td>
+<td style="text-align:right;">
+-17.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+19606
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+19374
+</td>
+<td style="text-align:right;">
+232.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+20505
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+19809
+</td>
+<td style="text-align:right;">
+696.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+21100
+</td>
+<td style="text-align:right;">
+652
+</td>
+<td style="text-align:right;">
+20162
+</td>
+<td style="text-align:right;">
+937.7
+</td>
+</tr>
+</tbody>
+</table>
+In this following plot, we observe the fitted curve, as well as observed data points
+<div class="figure" style="text-align: center"><span id="fig:fig-12"></span>
+<img src="_main_files/figure-html/fig-12-1.png" alt="Figure 12" width="80%" />
+<p class="caption">
+Figure 4.1: Figure 12
+</p>
+</div>
+<p>The 2 curves are close, which mean that our predictions are well estimate, regarding are true value.</p>
+<p>In order to well assess our model, we pot the residuals of the mode.</p>
+<pre><code>## Nonlinear regression model
+##   model: confirmed ~ K/(1 + ((K - C_0)/C_0) * exp(-R * t))
+##    data: data
+##        K        R 
+## 2.15e+04 2.46e-01 
+##  residual sum-of-squares: 6230581
+## 
+## Number of iterations to convergence: 7 
+## Achieved convergence tolerance: 4.23e-06</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig-13"></span>
+<img src="_main_files/figure-html/fig-13-1.png" alt="Figure 13" width="80%" />
+<p class="caption">
+Figure 4.2: Figure 13
+</p>
+</div>
+<p>We observe a pretty well prediction when our fitted value are small, but when they increase, our residuals increase too.</p>
 
 </div>
 </div>

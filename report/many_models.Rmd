@@ -9,7 +9,8 @@ Because, for some countries, the optimization method might not converge, you can
 For which country does the optimization fail ?
 Assess the goodness-of-fit of the logistic model in the various countries.
 
-```{r}
+```{r table 5, warning=FALSE, message=FALSE, echo = FALSE}
+
 
 by_country <- covid19_data_filtered %>%
               group_by(country) %>%
@@ -28,10 +29,18 @@ tmp %>%
   unnest(tdy) %>%
   select(country,term,estimate,std.error) %>%
   kable(
-    caption = "List of the first countries touched by the pandemia."
+    caption = "List of the K and R for each country of our model"
        ) %>%
   kable_styling(
     bootstrap_options = "striped")
+```
+
+In this table, we observe, for each country, the number of confirmed case with the "K" and the infection rate with the "K". 
+We notice that the Japan doesn't figure in this table. 
+
+
+In order to assess the goodness-of-fit of the logistic model in the various countries, we plot the residuals of our predictions. 
+```{r fig-14, fig.cap="Figure 14", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 fitted_model %>%
   ggplot(aes(t,.resid)) +
@@ -44,11 +53,8 @@ fitted_model %>%
     colour="Country"
   )
 
-
-## In the model, we don't  find the Japan
-
-
 ```
+In this plot, we observe that the resdiduals increase with the time dimension, which it's not surprising.
 
 ## Fitted parameters and long-term predictions
 
@@ -62,7 +68,7 @@ Hints:
 * Format the fitted parameters using `broom::tidy()`.
 * For the long-term predictions, you can use `data = data.frame(t = 0:50)` in `add_predictions()`.
 
-```{r}
+```{r fig-15, fig.cap="Figure 15", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 fitted_model_2<- fitted_model %>% filter(t<=50)
 
 best_in_each_fitted <- fitted_model_2 %>%
@@ -79,6 +85,13 @@ fitted_model_2 %>%
     y="Prediction for the confirmed case") 
 
 
+```
+In this plot, we observe an increase with the time regarding our predicted confirmed case.
+
+
+But in order to better undersant which curve correspond to which country, we add the country name for each curve.
+```{r fig-16, fig.cap="Figure 16", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
 fitted_model_2 %>%
   ggplot(aes(t,.fitted)) +
   geom_line(aes(colour=country),alpha=1/3) +
@@ -89,12 +102,11 @@ fitted_model_2 %>%
     x= "Day",
     y="Prediction for the confirmed case") 
 
+```
+Therefore, we notice that the exponentital curve correspond to the USA.
 
-
-## Same analysis but relative to the population
-
-
-
+To better evaluate the evolution, we poursuive the same analysis but regarding to the population if each country, in order to better visualize the problematic.
+```{r fig-17, fig.cap="Figure 17", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 joined<-left_join(
   covid19_data_filtered %>% select(population,country),
   fitted_model_2 %>% select(-data,-log_model),
@@ -118,3 +130,4 @@ joined %>% ggplot(aes(t,ratio_pop))+
     ) 
 
 ```
+When we look the number of case proportional to the population, we notice that the plot isn't the same as before, and that now the exponential curve corresponf to  Luxembrug and Iceland.

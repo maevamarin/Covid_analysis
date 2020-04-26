@@ -59,7 +59,7 @@ library(broom)
 
 Worldwide analyze
 
-```{r fig-1, fig.cap="Figure 1", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-1, fig.cap="Figure 1", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 covid19_data %>% 
   group_by(date) %>% 
   summarize(Confirmed = sum(confirmed), Deaths = sum(deaths)) %>% 
@@ -88,7 +88,7 @@ labs(
 ```
 
 
-```{r fig-2, fig.cap="Figure 2", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-2, fig.cap="Figure 2", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% 
   mutate(ratio = (deaths/confirmed))
@@ -114,8 +114,8 @@ covid19_data %>%
      caption = "data from jh_covid19_data_2020-04-06.csv")
 ```
 
-```{r fig-3, fig.cap="Figure 3", out.width="80%", fig.asp=.75,fig.align='center'}
- covid19_data %>%
+```{r fig-3, fig.cap="Figure 3", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE,echo = FALSE} 
+covid19_data %>%
   group_by(date,region) %>%
   summarize(Confirmed = sum(confirmed)) %>%
   ggplot(aes(
@@ -137,7 +137,7 @@ covid19_data %>%
     col = "Region") 
 ```
 
-```{r fig-4, fig.cap="Figure 4", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-4, fig.cap="Figure 4", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
  covid19_data %>%
   group_by(date, region) %>%
@@ -161,7 +161,7 @@ covid19_data %>%
    col = "Region") 
 ```
 
-```{r fig-5, fig.cap="Figure 5", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-5, fig.cap="Figure 5", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
   covid19_data %>%
   group_by(date, region) %>%
@@ -186,7 +186,7 @@ covid19_data %>%
   
 ```
 
-```{r fig-6, fig.cap="Figure 6", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-6, fig.cap="Figure 6", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% mutate(ratio_pop=(confirmed/population))
 covid19_data$ratio[is.nan(covid19_data$ratio)]<-0
@@ -215,7 +215,7 @@ covid19_data %>%
   
 ```
 
-```{r fig-7, fig.cap="Figure 7", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-7, fig.cap="Figure 7", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% 
   mutate(ratio_death_pop = (deaths/population))
@@ -256,7 +256,7 @@ Hint: `ggplot2` package includes two helpful command for this part, namely
 Use `expand_limits` to make sure you display the whole map of the world.
 
 
-```{r fig-8, fig.cap="Figure 8", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-8, fig.cap="Figure 8", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid <- read_csv(file = here::here("data/jh_covid19_data_2020-04-06.csv"))
 
@@ -298,7 +298,7 @@ Discuss using either tables or visualizations or both:
 * What is the state of the spread there?
 * What is the relationship between `t` and `confirmed_1e5pop`?
 
-```{r}
+```{r table 1, warning=FALSE, message=FALSE, echo = FALSE}
 covid19_data %>%
   group_by(country) %>%
   filter(date == "2020-01-22") %>%
@@ -327,7 +327,7 @@ covid19_data_filtered <- covid19_data %>%
   mutate(confirmed_1e5pop = confirmed*100000/population)
 ```
 
-```{r}   
+```{r table 2, warning=FALSE, message=FALSE, echo = FALSE}
 head(covid19_data_filtered) %>%
   select(country, date, confirmed,, deaths, population) %>%
      kable(
@@ -337,7 +337,7 @@ head(covid19_data_filtered) %>%
     bootstrap_options = "striped")
 ```
 
-```{r fig-9, fig.cap="Figure 9", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-9, fig.cap="Figure 9", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 # plot of the evolution of the number of case
 covid19_data_filtered %>% 
   filter(confirmed >= 50000) %>%
@@ -359,7 +359,7 @@ covid19_data_filtered %>%
     subtitle = "The evolution of confirmed cases in the 7 most impacted countries")
 ```
 
-```{r fig-10, fig.cap="Figure 10", out.width="80%", fig.asp=.75,fig.align='center'}
+```{r fig-10, fig.cap="Figure 10", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 # same plot but in proportion to the number of habitant 
 covid19_data_filtered %>% 
   filter(confirmed>=50000) %>%

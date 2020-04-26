@@ -178,198 +178,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>group your analysis per country, or region, or a bit of each.</li>
 </ul>
 <p>Worldwide analyze</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">covid19_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Confirmed =</span> <span class="kw">sum</span>(confirmed), <span class="dt">Deaths =</span> <span class="kw">sum</span>(deaths)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">y =</span> Confirmed,</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="dt">col =</span> <span class="st">&quot;Confirmed&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">geom_line</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="dt">y =</span> Deaths, </a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="dt">col =</span> <span class="st">&quot;Deaths&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw">theme</span>(</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">                               <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">    <span class="dt">title =</span> <span class="st">&quot;Higly increase evolution for the confirmed case&quot;</span>,</a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation&quot;</span>,</a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    <span class="dt">y =</span> <span class="st">&quot;People&quot;</span>,</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">    <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">    <span class="dt">col =</span> <span class="st">&quot;Variables&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-1"></span>
 <img src="_main_files/figure-html/fig-1-1.png" alt="Figure 1" width="80%" />
 <p class="caption">
 Figure 1.1: Figure 1
 </p>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">covid19_data &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio =</span> (deaths<span class="op">/</span>confirmed))</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">covid19_data<span class="op">$</span>ratio[<span class="kw">is.nan</span>(covid19_data<span class="op">$</span>ratio)]&lt;-<span class="dv">0</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">covid19_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Mean_Ratio =</span> <span class="kw">mean</span>(ratio)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="dt">y =</span> Mean_Ratio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="st">   </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">     <span class="dt">title =</span> <span class="st">&quot;High increase in the death rate related to confirmed cases of covid-19&quot;</span>, </a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">     <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation&quot;</span>, </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">     <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">     <span class="dt">y =</span> <span class="st">&quot;Ratio deaths/confirmed cases&quot;</span>, </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">     <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-2"></span>
 <img src="_main_files/figure-html/fig-2-1.png" alt="Figure 2" width="80%" />
 <p class="caption">
 Figure 1.2: Figure 2
 </p>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"> covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date,region) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Confirmed =</span> <span class="kw">sum</span>(confirmed)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="dt">y =</span> Confirmed, </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">colour =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="st">   </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">                                    <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="dt">title =</span> <span class="st">&quot;Flat increase and early deperature in confirmed cases in East Asia &amp; Pacific regions&quot;</span>,</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation grouped by region&quot;</span>,</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="dt">y =</span> <span class="st">&quot;Number of confirmed cases&quot;</span>,</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">    <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">    <span class="dt">col =</span> <span class="st">&quot;Region&quot;</span>) </a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-3"></span>
 <img src="_main_files/figure-html/fig-3-1.png" alt="Figure 3" width="80%" />
 <p class="caption">
 Figure 1.3: Figure 3
 </p>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"> covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date, region) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Deaths =</span> <span class="kw">sum</span>(deaths)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">y =</span> Deaths, </a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="dt">colour =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">   </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">     <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">     <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">   <span class="dt">title =</span> <span class="st">&quot;Exponential curve for the deaths in Europe &amp; Central Asia&quot;</span>,</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">   <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation grouped by region&quot;</span>,</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">   <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">   <span class="dt">y =</span> <span class="st">&quot;Deaths&quot;</span>,</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">   <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">   <span class="dt">col =</span> <span class="st">&quot;Region&quot;</span>) </a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-4"></span>
 <img src="_main_files/figure-html/fig-4-1.png" alt="Figure 4" width="80%" />
 <p class="caption">
 Figure 1.4: Figure 4
 </p>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">  covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date, region) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Mean_ratio =</span> <span class="kw">mean</span>(ratio)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">y =</span> Mean_ratio, </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    <span class="dt">colour =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">    <span class="dt">title =</span> <span class="st">&quot;We observe an increase in the death rate related to confirmed cases </span><span class="ch">\n</span><span class="st">of covid-19&quot;</span>,</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">    <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation grouped by region&quot;</span>,</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">    <span class="dt">x=</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">    <span class="dt">y=</span> <span class="st">&quot;Ratio deaths/confirmed cases&quot;</span>,</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">    <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">    <span class="dt">col =</span> <span class="st">&quot;Region&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-5"></span>
 <img src="_main_files/figure-html/fig-5-1.png" alt="Figure 5" width="80%" />
 <p class="caption">
 Figure 1.5: Figure 5
 </p>
 </div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">covid19_data &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ratio_pop=</span>(confirmed<span class="op">/</span>population))</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">covid19_data<span class="op">$</span>ratio[<span class="kw">is.nan</span>(covid19_data<span class="op">$</span>ratio)]&lt;-<span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(date,region) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Mean_ratio_pop =</span> <span class="kw">mean</span>(ratio_pop)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">y =</span> Mean_ratio_pop, </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="dt">colour =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">    <span class="dt">title =</span> <span class="st">&quot;Europe &amp; Central Asia are the regions with the highest </span><span class="ch">\n</span><span class="st">contamination rate related to covid-19...&quot;</span>,</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">    <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation grouped by region&quot;</span>,</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb6-22" data-line-number="22">    <span class="dt">y =</span> <span class="st">&quot;Ratio confirmed cases / population size&quot;</span>,</a>
-<a class="sourceLine" id="cb6-23" data-line-number="23">   <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb6-24" data-line-number="24">   <span class="dt">col =</span> <span class="st">&quot;Region&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-6"></span>
 <img src="_main_files/figure-html/fig-6-1.png" alt="Figure 6" width="80%" />
 <p class="caption">
 Figure 1.6: Figure 6
 </p>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">covid19_data &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio_death_pop =</span> (deaths<span class="op">/</span>population))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">covid19_data<span class="op">$</span>ratio[<span class="kw">is.nan</span>(covid19_data<span class="op">$</span>ratio_death_pop)]&lt;-<span class="dv">0</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(date, region) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Mean_ratio_death_pop =</span> <span class="kw">mean</span>(ratio_death_pop)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="dt">x =</span> date, </a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">    <span class="dt">y =</span> Mean_ratio_death_pop, </a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="dt">colour =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">    <span class="dt">title =</span> <span class="st">&quot;... Europe &amp; Central Asia face as well the highest </span><span class="ch">\n</span><span class="st">death ratio related to covid-19&quot;</span>,</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">    <span class="dt">subtitle =</span> <span class="st">&quot;Worldwide representation grouped by region&quot;</span>,</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">    <span class="dt">y =</span> <span class="st">&quot;Ratio deaths / population size&quot;</span>,</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">   <span class="dt">caption =</span> <span class="st">&quot;data from jh_covid19_data_2020-04-06.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">   <span class="dt">col =</span> <span class="st">&quot;Region&quot;</span>) </a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-7"></span>
 <img src="_main_files/figure-html/fig-7-1.png" alt="Figure 7" width="80%" />
 <p class="caption">
@@ -383,30 +227,6 @@ Figure 1.7: Figure 7
 <li>and <code>geom_map()</code> to draw a map on a plot.</li>
 </ul>
 <p>Use <code>expand_limits</code> to make sure you display the whole map of the world.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">covid &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data/jh_covid19_data_2020-04-06.csv&quot;</span>))</a></code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   country = col_character(),
-##   iso3c = col_character(),
-##   date = col_date(format = &quot;&quot;),
-##   confirmed = col_double(),
-##   deaths = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co">#filter by the latest data available for each country</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">covid_latest =covid <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(date <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(date)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  )</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#add long lat to table</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">worldmap &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;world&quot;</span>)</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">worldmap=<span class="st"> </span>worldmap <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">country=</span>region)</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">graph1=<span class="st"> </span><span class="kw">left_join</span>(worldmap, covid_latest,<span class="st">&quot;country&quot;</span>)</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#plot the table</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">  <span class="kw">ggplot</span>(graph1, <span class="kw">aes</span>(long, lat,<span class="dt">group=</span>group))<span class="op">+</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_polygon</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> confirmed ), <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">&quot;C&quot;</span>, <span class="dt">labels =</span> scales<span class="op">::</span>comma)<span class="op">+</span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Number of people Confirmed COVID-19 at the latest date available&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="dv">6</span>, <span class="dt">face=</span><span class="st">&quot;bold&quot;</span>))<span class="op">+</span><span class="st"> </span><span class="kw">expand_limits</span>(<span class="dt">x =</span>graph1<span class="op">$</span>long, <span class="dt">y =</span> graph1<span class="op">$</span>lat)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-8"></span>
 <img src="_main_files/figure-html/fig-8-1.png" alt="Figure 8" width="80%" />
 <p class="caption">
@@ -431,20 +251,9 @@ Figure 1.8: Figure 8
 <li>What is the state of the spread there?</li>
 <li>What is the relationship between <code>t</code> and <code>confirmed_1e5pop</code>?</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(date <span class="op">==</span><span class="st"> &quot;2020-01-22&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(confirmed)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(country, date, confirmed, deaths) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">     </span><span class="kw">kable</span>(</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">    <span class="dt">caption =</span> <span class="st">&quot;List of the first countries touched by the pandemic.&quot;</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">       ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="st">  </span><span class="kw">kable_styling</span>(</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11">    <span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>)</a></code></pre></div>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-3">Table 1.1: </span>List of the first countries touched by the pandemic.
+(#tab:table 1)List of the first countries touched by the pandemic.
 </caption>
 <thead>
 <tr>
@@ -549,25 +358,17 @@ Afghanistan
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="st">&quot; The $k$ country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries&#39; day 1 starts when the number of confirmed cases reached 548.&quot;</span></a></code></pre></div>
 <pre><code>## [1] &quot; The $k$ country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries&#39; day 1 starts when the number of confirmed cases reached 548.&quot;</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Filtering the data to obtain a subset containing only the first cases reported in the countries</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">covid19_data_filtered &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(confirmed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">548</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">     </span><span class="kw">filter</span>(<span class="kw">min</span>(date) <span class="op">%--%</span><span class="st"> </span><span class="kw">max</span>(date) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">int_length</span>(<span class="kw">dweeks</span>(<span class="dv">2</span>)))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t =</span> <span class="kw">as.numeric</span>(<span class="kw">min</span>(date)<span class="op">%--%</span>date)<span class="op">%/%</span><span class="dv">86400</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">confirmed_1e5pop =</span> confirmed<span class="op">*</span><span class="dv">100000</span><span class="op">/</span>population)</a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">head</span>(covid19_data_filtered) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(country, date, confirmed,, deaths, population) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">     </span><span class="kw">kable</span>(</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">    <span class="dt">caption =</span> <span class="st">&quot;Glimpse of the countries&#39; day 1 aligned&quot;</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">       ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw">kable_styling</span>(</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">    <span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Filtering the data to obtain a subset containing only the first cases reported in the countries</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">covid19_data_filtered &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(confirmed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">548</span> ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">     </span><span class="kw">filter</span>(<span class="kw">min</span>(date) <span class="op">%--%</span><span class="st"> </span><span class="kw">max</span>(date) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">int_length</span>(<span class="kw">dweeks</span>(<span class="dv">2</span>)))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t =</span> <span class="kw">as.numeric</span>(<span class="kw">min</span>(date)<span class="op">%--%</span>date)<span class="op">%/%</span><span class="dv">86400</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">confirmed_1e5pop =</span> confirmed<span class="op">*</span><span class="dv">100000</span><span class="op">/</span>population)</a></code></pre></div>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-5">Table 1.2: </span>Glimpse of the countries’ day 1 aligned
+(#tab:table 2)Glimpse of the countries’ day 1 aligned
 </caption>
 <thead>
 <tr>
@@ -693,49 +494,12 @@ Australia
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># plot of the evolution of the number of case</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">covid19_data_filtered <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(confirmed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">    <span class="dt">x =</span> date,</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">    <span class="dt">y =</span> confirmed, </a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">    <span class="dt">fill =</span> country, </a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">    <span class="dt">col =</span> country)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>, </a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, </a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">                                   <span class="dt">hjust =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="st">  </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb16-16" data-line-number="16">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb16-17" data-line-number="17">    <span class="dt">y =</span> <span class="st">&quot;Confirmed cased&quot;</span>,</a>
-<a class="sourceLine" id="cb16-18" data-line-number="18">    <span class="dt">title =</span> <span class="st">&quot;USA has the highest evolution of the COVID-19&quot;</span>,</a>
-<a class="sourceLine" id="cb16-19" data-line-number="19">    <span class="dt">subtitle =</span> <span class="st">&quot;The evolution of confirmed cases in the 7 most impacted countries&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-9"></span>
 <img src="_main_files/figure-html/fig-9-1.png" alt="Figure 9" width="80%" />
 <p class="caption">
 Figure 1.9: Figure 9
 </p>
 </div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># same plot but in proportion to the number of habitant </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">covid19_data_filtered <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(confirmed<span class="op">&gt;=</span><span class="dv">50000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">    <span class="dt">x =</span> date,</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">    <span class="dt">y =</span> confirmed_<span class="fl">1e5</span>pop, </a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">    <span class="dt">fill =</span> country, </a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">    <span class="dt">col =</span> country)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_x_date</span>(</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">    <span class="dt">date_breaks =</span> <span class="st">&quot;1 week&quot;</span>,</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">    <span class="dt">date_labels =</span> <span class="st">&quot;%b %d&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="st">  </span><span class="kw">labs</span> (</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15">    <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
-<a class="sourceLine" id="cb17-16" data-line-number="16">    <span class="dt">y =</span> <span class="st">&quot;confirmed cases per 100&#39;000 inhabitants&quot;</span>,</a>
-<a class="sourceLine" id="cb17-17" data-line-number="17">    <span class="dt">title =</span> <span class="st">&quot;Spain has the highest evolution per 100&#39;000 habitants&quot;</span>,</a>
-<a class="sourceLine" id="cb17-18" data-line-number="18">    <span class="dt">subtitle =</span> <span class="st">&quot;The evolution of confirmed cases in the 7 most impacted countries&quot;</span> )</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:fig-10"></span>
 <img src="_main_files/figure-html/fig-10-1.png" alt="Figure 10" width="80%" />
 <p class="caption">

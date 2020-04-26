@@ -46,24 +46,51 @@ Then:
 * Plot the fitted curve, as well as observed data points. 
 * Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?
 
-```{r}
+
+The prediction shows that the final size of the confirmed case is about 21'500 cases, with an infection rate of 0.246%.
+```{r table 3, warning=FALSE, message=FALSE, echo = FALSE}
 covid19_ch <- covid19_data_filtered %>% filter(country=="Switzerland")
-broom::tidy(logistic_model(covid19_ch))
+broom::tidy(logistic_model(covid19_ch))  %>%
+     kable(
+    caption = "K = confirmed case, R = Infesction rate"
+       ) %>%
+  kable_styling(
+    bootstrap_options = "striped")
+```
+
+
+```{r table 4, warning=FALSE, message=FALSE, echo = FALSE}
 augment_model <-broom::augment(logistic_model(covid19_ch))
-broom::augment(logistic_model(covid19_ch)) %>% print(n=10)
+broom::augment(logistic_model(covid19_ch)) %>% print(n=10) %>%
+     kable(
+    caption = "Presentation of the prediction"
+       ) %>%
+  kable_styling(
+    bootstrap_options = "striped")
+```
 
-augment_model <-broom::augment(logistic_model(covid19_ch))
-##The prediction shows that the final size of the confirmed case is about 21'500 cases, with an infection rate of 0.246%.
 
-
+In this following plot, we observe  the fitted curve, as well as observed data points
+```{r fig-12, fig.cap="Figure 12", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 augment_model %>% ggplot() +
   geom_line(aes(x=t, y= confirmed, col="Observed")) +
   geom_line(aes(x=t, y= .fitted, col="Fitted" )) +
   labs(title = "Well goodness-of fit", subtitle = "Between the observed and fitted value", x= "Time period",y= "Confirmed people", col= "Model")
-
-##Present the prediction
-
-plot(logistic_model(covid19_ch))
-
-
 ```
+The 2 curves are close, which mean that our predictions are well estimate, regarding are true value.
+
+
+In order to well assess our model, we pot the residuals of the mode.
+
+```{r fig-13, fig.cap="Figure 13", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+logistic_model(covid19_ch)
+
+ggplot(augment_model) + 
+  geom_point(aes(x=.fitted, y=.resid)) +
+  labs(
+    title = "Residuals increase regarding the increase of our prediction",
+    x= "Prediction",
+    y= "Residuals"
+  )
+```
+We observe a pretty well prediction when our fitted value are small, but when they increase, our residuals increase too.
