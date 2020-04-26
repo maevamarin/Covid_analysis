@@ -177,47 +177,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>use either words, or tables, or figures, or a bit of each,</li>
 <li>group your analysis per country, or region, or a bit of each.</li>
 </ul>
-<p>Worldwide analyze</p>
+<p>The red curve, being the worldwide confirmed cases of COVID-19, increased exponentially. We note the sort of hill in December-January, corresponding to the Chinese reported cases, country which faced in first the pandemic.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-1"></span>
-<img src="_main_files/figure-html/fig-1-1.png" alt="Figure 1" width="80%" />
+<img src="_main_files/figure-html/fig-1-1.png" alt="Worldwide representation" width="80%" />
 <p class="caption">
-Figure 1.1: Figure 1
+Figure 1.1: Worldwide representation
 </p>
 </div>
+<p>The death rate fortunately, followed another trend: a more linear one. It increased over time, due to the spread of the virus over the world.<a href="exploratory-data-analysis.html#fig:fig-1">1.1</a></p>
+The Figure <a href="exploratory-data-analysis.html#fig:fig-2">1.2</a> depicts the death rate evolving over time. The jumps might be explained by the fast expansion in newly-infected countries, which were caught by the situation for example, or the latent deaths of persons at risk, touched by the COVID-19 during peaks, and so on and so forth.
 <div class="figure" style="text-align: center"><span id="fig:fig-2"></span>
-<img src="_main_files/figure-html/fig-2-1.png" alt="Figure 2" width="80%" />
+<img src="_main_files/figure-html/fig-2-1.png" alt="Deaths against confirmed" width="80%" />
 <p class="caption">
-Figure 1.2: Figure 2
+Figure 1.2: Deaths against confirmed
 </p>
 </div>
+<p>Now, we would like to consder the variability of the spread among regions in the world. The below plot <a href="exploratory-data-analysis.html#fig:fig-3">1.3</a> shows well the disparity existing in the world regions. Europe and Central Asia report the majority of confirmed cases, followed by North America, whose fast covid-19 expansion became the main concern of the medias, while East Asia &amp; Pacific have a flattening curve of reported confirmed cases. The countries in this region were the first ones to face the pandemic and we must add that they have a reputation in the matter of sanitary management what might explain the contained increase in confirmed cases of COVID-19.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-3"></span>
-<img src="_main_files/figure-html/fig-3-1.png" alt="Figure 3" width="80%" />
+<img src="_main_files/figure-html/fig-3-1.png" alt="Regarding the region" width="80%" />
 <p class="caption">
-Figure 1.3: Figure 3
+Figure 1.3: Regarding the region
 </p>
 </div>
+<p>The severity of the COVID-19 is linked as well to the death caused by the virus. Figure <a href="exploratory-data-analysis.html#fig:fig-4">1.4</a> presents the death rate associated to the seven regions of the world identified in our dataset.</p>
+<p>Europe and Central Asia lead as well the panel in matter of death rate. Because of the spread of the expansion, the number of cases multiplied but the death rate is as well linked to the response of the governments and the health systems, and the medias reported well the emergency situation of the European health system, what struggled to help many people (e.g. in Italy, in Spain.)</p>
+<p>The death rate observed for North America is as well another information to keep in mind: the death rate increases lately but very rapidly.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-4"></span>
-<img src="_main_files/figure-html/fig-4-1.png" alt="Figure 4" width="80%" />
+<img src="_main_files/figure-html/fig-4-1.png" alt="Regarding the region" width="80%" />
 <p class="caption">
-Figure 1.4: Figure 4
+Figure 1.4: Regarding the region
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:fig-5"></span>
-<img src="_main_files/figure-html/fig-5-1.png" alt="Figure 5" width="80%" />
+<img src="_main_files/figure-html/fig-5-1.png" alt="Deaths against confrimed" width="80%" />
 <p class="caption">
-Figure 1.5: Figure 5
+Figure 1.5: Deaths against confrimed
 </p>
 </div>
+<p>Now, we should analyze the contamination rate of those regions, which is determined by the ratio of confirmed cases over population size.
+The Figure <a href="exploratory-data-analysis.html#fig:fig-6">1.6</a> presents almost the same curves as the confirmed cases plot. Europa and Central Asia, as well as North America have great increasing contamination rate until April 6th, the last date of our dataset, while the other regions did not have reached 0.025% of contamination rate.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-6"></span>
-<img src="_main_files/figure-html/fig-6-1.png" alt="Figure 6" width="80%" />
+<img src="_main_files/figure-html/fig-6-1.png" alt="Regarding the population" width="80%" />
 <p class="caption">
-Figure 1.6: Figure 6
+Figure 1.6: Regarding the population
 </p>
 </div>
+<p>And unfortunately, the death rate associated to COVID-19 increases with the same trend than the contamination rate for those regions.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-7"></span>
-<img src="_main_files/figure-html/fig-7-1.png" alt="Figure 7" width="80%" />
+<img src="_main_files/figure-html/fig-7-1.png" alt="Regarding the population" width="80%" />
 <p class="caption">
-Figure 1.7: Figure 7
+Figure 1.7: Regarding the population
 </p>
 </div>
 <p>Produce a worlwide map of the <strong>COVID-19</strong> spread at the latest date available in <code>covid19_data</code> for each country, and describe what you see.</p>
@@ -227,10 +236,14 @@ Figure 1.7: Figure 7
 <li>and <code>geom_map()</code> to draw a map on a plot.</li>
 </ul>
 <p>Use <code>expand_limits</code> to make sure you display the whole map of the world.</p>
+<p>If we would like to represent the above information more geographically for understanding matter, we would plot it on a map. Doing this, we observe a clear distinction between regions: Africa, South America and Oceania are grouped together as reporting few confirmed cases of COVID-19.<a href="exploratory-data-analysis.html#fig:fig-8">1.8</a></p>
+<p>We identified previously Europa &amp; Central Asia as unfortunate leaders in contamination and death rates, what is shows by the map: they are in a intermediary status on the worldwide scale. Italy and Spain appear the European countries in a lighter color, and lighter color means more confirmed cases reported.</p>
+<p>China is at the same stage than Europa and Central Asia, seemingly.</p>
+<p>The region of North America, but more precisely USA, is in the worst sanitary status according to our scale. The expansion of the COVID-19 within the USA’s borders and the death rate associated put this country in a mediocre standing.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-8"></span>
-<img src="_main_files/figure-html/fig-8-1.png" alt="Figure 8" width="80%" />
+<img src="_main_files/figure-html/fig-8-1.png" alt="Worldmap" width="80%" />
 <p class="caption">
-Figure 1.8: Figure 8
+Figure 1.8: Worldmap
 </p>
 </div>
 </div>
@@ -253,7 +266,7 @@ Figure 1.8: Figure 8
 </ul>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-(#tab:table 1)List of the first countries touched by the pandemic.
+<span id="tab:table1">Table 1.1: </span>List of the first countries touched by the pandemic.
 </caption>
 <thead>
 <tr>
@@ -358,34 +371,16 @@ Afghanistan
 </tr>
 </tbody>
 </table>
-<pre><code>## [1] &quot; The $k$ country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries&#39; day 1 starts when the number of confirmed cases reached 548.&quot;</code></pre>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Filtering the data to obtain a subset containing only the first cases reported in the countries</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">covid19_data_filtered &lt;-<span class="st"> </span>covid19_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(confirmed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">548</span> ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">     </span><span class="kw">filter</span>(<span class="kw">min</span>(date) <span class="op">%--%</span><span class="st"> </span><span class="kw">max</span>(date) <span class="op">&gt;=</span><span class="st"> </span><span class="kw">int_length</span>(<span class="kw">dweeks</span>(<span class="dv">2</span>)))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t =</span> <span class="kw">as.numeric</span>(<span class="kw">min</span>(date)<span class="op">%--%</span>date)<span class="op">%/%</span><span class="dv">86400</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">confirmed_1e5pop =</span> confirmed<span class="op">*</span><span class="dv">100000</span><span class="op">/</span>population)</a></code></pre></div>
+<p>As we observe in the table <a href="exploratory-data-analysis.html#tab:table1">1.1</a>,the <span class="math inline">\(k\)</span> country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries’ day 1 starts when the number of confirmed cases reached 548.</p>
+<p>Many countries do not appear on the subset covid_data_filtered because of the threshold of 548 confirmed cases,<a href="exploratory-data-analysis.html#tab:table1">1.1</a>. The measures taken to prevent the covid-19 worldwide have been shared and are common among countries. This preventive measures would have been braked the spread of the virus, making more difficult to reach our threshold of 548. Furthermore, the difference in mean and in protocoles to confirm a case of coronavirus greatly varies among countries in the world. This second barrier is perhaps the greatest to overcome because of the global shortage of testing material. The reported confirmed cases might hide an unknown number of non-tested but positive case to coronavirus (Omitten/hidden cases are like false negative).</p>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-(#tab:table 2)Glimpse of the countries’ day 1 aligned
+<span id="tab:table2">Table 1.2: </span>Glimpse of the countries’ day 1 aligned
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 country
-</th>
-<th style="text-align:left;">
-date
-</th>
-<th style="text-align:right;">
-confirmed
-</th>
-<th style="text-align:right;">
-deaths
-</th>
-<th style="text-align:right;">
-population
 </th>
 </tr>
 </thead>
@@ -394,122 +389,196 @@ population
 <td style="text-align:left;">
 Australia
 </td>
+</tr>
+<tr>
 <td style="text-align:left;">
-2020-03-18
-</td>
-<td style="text-align:right;">
-568
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2.5e+07
+Austria
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Australia
-</td>
-<td style="text-align:left;">
-2020-03-19
-</td>
-<td style="text-align:right;">
-681
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2.5e+07
+Belgium
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Australia
-</td>
-<td style="text-align:left;">
-2020-03-20
-</td>
-<td style="text-align:right;">
-791
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2.5e+07
+Brazil
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Australia
-</td>
-<td style="text-align:left;">
-2020-03-21
-</td>
-<td style="text-align:right;">
-1071
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2.5e+07
+Canada
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Australia
-</td>
-<td style="text-align:left;">
-2020-03-22
-</td>
-<td style="text-align:right;">
-1549
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2.5e+07
+Chile
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Australia
+China
 </td>
+</tr>
+<tr>
 <td style="text-align:left;">
-2020-03-23
+Czechia
 </td>
-<td style="text-align:right;">
-1682
+</tr>
+<tr>
+<td style="text-align:left;">
+Denmark
 </td>
-<td style="text-align:right;">
-7
+</tr>
+<tr>
+<td style="text-align:left;">
+Ecuador
 </td>
-<td style="text-align:right;">
-2.5e+07
+</tr>
+<tr>
+<td style="text-align:left;">
+Finland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Germany
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Greece
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Iceland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Iran
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ireland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Israel
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Italy
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Japan
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Korea, South
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Luxembourg
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Malaysia
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Netherlands
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Norway
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pakistan
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Poland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Portugal
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spain
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sweden
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Switzerland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Thailand
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Turkey
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+United Kingdom
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USA
 </td>
 </tr>
 </tbody>
 </table>
+<p>The countries removed of our panel due to our filtering are 39: Algeria, Argentina, Armenia, Azerbaijan, Bahrain, Belarus, Bosnia and Herzegovina, Cameroon, Colombia, Croatia, Dominican Republic, Egypt, Estonia, Hungary, India, Indonesia, Iraq, Kazakhstan, Kuwait, Lithuania, Mexico, Moldova, Morocco, New Zealand, North Macedonia, Panama, Peru, Philippines, Qatar, Romania, Russia, Saudi Arabia, Serbia, Singapore, Slovenia, South Africa, Tunisia, Ukraine, United Arab Emirates.</p>
+<p>The countries included in the filtered data are 28 : Australia, Austria, Belgium, Brazil, Canada, China, Czechia, Denmark, France, Germany, Iran, Ireland, Israel, Italy, Japan, South Korea, Luxembourg, Malaysia, Netherlands, Norway, Pakistan, Portugal, Spain, Sweden, Switzerland, Turkey, United Kingdom, USA. As we can observe in the table <a href="exploratory-data-analysis.html#tab:table2">1.2</a>.</p>
+<p>To better understand the trend of the subset of countries, we do similar plots as above.</p>
+<p>China, France, Germany, Iran, Italy, Spain and USA appear in the Figure <a href="exploratory-data-analysis.html#fig:fig-9">1.9</a>, which looks like the the Figure <a href="exploratory-data-analysis.html#fig:fig-3">1.3</a>, plot for regions. Without doing the necessary statistical computation and rather jeepoing at an assumption, those countries might be served as proxy for their region.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-9"></span>
-<img src="_main_files/figure-html/fig-9-1.png" alt="Figure 9" width="80%" />
+<img src="_main_files/figure-html/fig-9-1.png" alt="Country with more thab 50000 confrimed case" width="80%" />
 <p class="caption">
-Figure 1.9: Figure 9
+Figure 1.9: Country with more thab 50000 confrimed case
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:fig-10"></span>
-<img src="_main_files/figure-html/fig-10-1.png" alt="Figure 10" width="80%" />
+<img src="_main_files/figure-html/fig-10-1.png" alt="Country with more than 50000 confirmed case" width="80%" />
 <p class="caption">
-Figure 1.10: Figure 10
+Figure 1.10: Country with more than 50000 confirmed case
 </p>
 </div>
-<p>&quot; Many countries do not appear on the subset covid_data_filtered because of the threshold of 548 confirmed cases. The measures taken to prevent the covid-19 worldwide have been shared and are common among countries. This preventive measures would have been braked the spread of the virus, making more difficult to reach our threshold of 548. Furthermore, the difference in mean and in protocoles to confirm a case of coronavirus greatly varies among countries in the world. This second barrier is perhaps the greatest to overcome because of the global shortage of testing material. The reported confirmed cases might hide an unknown number of non-tested but positive case to coronavirus (Omitten/hidden cases are like false negative).</p>
-<p>The countries removed of our panel due to our filtering are 39: Algeria, Argentina, Armenia, Azerbaijan, Bahrain, Belarus, Bosnia and Herzegovina, Cameroon, Colombia, Croatia, Dominican Republic, Egypt, Estonia, Hungary, India, Indonesia, Iraq, Kazakhstan, Kuwait, Lithuania, Mexico, Moldova, Morocco, New Zealand, North Macedonia, Panama, Peru, Philippines, Qatar, Romania, Russia, Saudi Arabia, Serbia, Singapore, Slovenia, South Africa, Tunisia, Ukraine, United Arab Emirates.</p>
-<p>The countries included in the filtered data are 28 : Australia, Austria, Belgium, Brazil, Canada, China, Czechia, Denmark, France, Germany, Iran, Ireland, Israel, Italy, Japan, South Korea, Luxembourg, Malaysia, Netherlands, Norway, Pakistan, Portugal, Spain, Sweden, Switzerland, Turkey, United Kingdom, USA
-&quot;</p>
+<p>The Figure <a href="exploratory-data-analysis.html#fig:fig-10">1.10</a> illustrate the spread of the COVID-19 per 100’000 inhabitants. Because the filtered countires vary in population size, the start of their curve varies as well (because it is relative to the threshold of 548 confirmed cases). Again, USA is one of the unfortunate leader in the expansion of COVID-19 by confirmed cases, but preceded by Spain.</p>
 
 </div>
 </div>

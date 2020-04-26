@@ -57,9 +57,9 @@ library(broom)
 ```
 
 
-Worldwide analyze
+The red curve, being the worldwide confirmed cases of COVID-19, increased exponentially. We note the sort of hill in December-January, corresponding to the Chinese reported cases, country which faced in first the pandemic.
 
-```{r fig-1, fig.cap="Figure 1", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+```{r fig-1, fig.cap="Worldwide representation", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 covid19_data %>% 
   group_by(date) %>% 
   summarize(Confirmed = sum(confirmed), Deaths = sum(deaths)) %>% 
@@ -87,8 +87,10 @@ labs(
     col = "Variables")
 ```
 
+The death rate fortunately, followed another trend: a more linear one. It increased over time, due to the spread of the virus over the world.\@ref(fig:fig-1)
 
-```{r fig-2, fig.cap="Figure 2", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+The Figure \@ref(fig:fig-2) depicts the death rate evolving  over time. The jumps might be explained by the fast expansion in newly-infected countries, which were caught by the situation for example, or the latent deaths of persons at risk, touched by the COVID-19 during peaks, and so on and so forth.
+```{r fig-2,fig.cap="Deaths against confirmed", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% 
   mutate(ratio = (deaths/confirmed))
@@ -114,7 +116,11 @@ covid19_data %>%
      caption = "data from jh_covid19_data_2020-04-06.csv")
 ```
 
-```{r fig-3, fig.cap="Figure 3", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE,echo = FALSE} 
+
+
+Now, we would like to consder the variability of the spread among regions in the world. The below plot \@ref(fig:fig-3) shows well the disparity existing in the world regions. Europe and Central Asia report the majority of confirmed cases, followed by North America, whose fast covid-19 expansion became the main concern of the medias, while East Asia & Pacific have a flattening curve of reported confirmed cases. The countries in this region were the first ones to face the pandemic and we must add that they have a reputation in the matter of sanitary management what might explain the contained increase in confirmed cases of COVID-19.
+
+```{r fig-3,fig.cap="Regarding the region", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE,echo = FALSE} 
 covid19_data %>%
   group_by(date,region) %>%
   summarize(Confirmed = sum(confirmed)) %>%
@@ -136,8 +142,13 @@ covid19_data %>%
     caption = "data from jh_covid19_data_2020-04-06.csv",
     col = "Region") 
 ```
+The severity of the COVID-19 is linked as well to the death caused by the virus. Figure \@ref(fig:fig-4) presents the death rate associated to the seven regions of the world identified in our dataset.
 
-```{r fig-4, fig.cap="Figure 4", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+Europe and Central Asia lead as well the panel in matter of death rate. Because of the spread of the expansion, the number of cases multiplied but the death rate is as well linked to the response of the governments and the health systems, and the medias reported well the emergency situation of the European health system, what struggled to help many people (e.g. in Italy, in Spain.)
+
+The death rate observed for North America is as well another information to keep in mind: the death rate increases lately but very rapidly.
+
+```{r fig-4,fig.cap="Regarding the region", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
  covid19_data %>%
   group_by(date, region) %>%
@@ -161,7 +172,9 @@ covid19_data %>%
    col = "Region") 
 ```
 
-```{r fig-5, fig.cap="Figure 5", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
+
+```{r fig-5,fig.cap="Deaths against confrimed", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
   covid19_data %>%
   group_by(date, region) %>%
@@ -186,7 +199,11 @@ covid19_data %>%
   
 ```
 
-```{r fig-6, fig.cap="Figure 6", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+Now, we should analyze the contamination rate of those regions, which is determined by the ratio of confirmed cases over population size.
+The Figure \@ref(fig:fig-6)  presents almost the same curves as the confirmed cases plot. Europa and Central Asia, as well as North America have great increasing contamination rate until April 6th, the last date of our dataset, while the other regions did not have reached 0.025% of contamination rate.
+
+
+```{r fig-6,fig.cap="Regarding the population", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% mutate(ratio_pop=(confirmed/population))
 covid19_data$ratio[is.nan(covid19_data$ratio)]<-0
@@ -215,7 +232,9 @@ covid19_data %>%
   
 ```
 
-```{r fig-7, fig.cap="Figure 7", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+And unfortunately, the death rate associated to COVID-19 increases with the same trend than the contamination rate for those regions.
+
+```{r fig-7,fig.cap="Regarding the population", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid19_data <- covid19_data %>% 
   mutate(ratio_death_pop = (deaths/population))
@@ -255,8 +274,15 @@ Hint: `ggplot2` package includes two helpful command for this part, namely
   
 Use `expand_limits` to make sure you display the whole map of the world.
 
+If we would like to represent the above information more geographically for understanding matter, we would plot it on a map. Doing this, we observe a clear distinction between regions: Africa, South America and Oceania are grouped together as reporting few confirmed cases of COVID-19.\@ref(fig:fig-8)
 
-```{r fig-8, fig.cap="Figure 8", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+We identified previously Europa & Central Asia as unfortunate leaders in contamination and death rates, what is shows by the map: they are in a intermediary status on the worldwide scale. Italy and Spain appear the European countries in a lighter color, and lighter color means more confirmed cases reported.
+
+China is at the same stage than Europa and Central Asia, seemingly.
+
+The region of North America, but more precisely USA, is in the worst sanitary status according to our scale. The expansion of the COVID-19 within the USA's borders and the death rate associated put this country in a mediocre standing.
+
+```{r fig-8,fig.cap="Worldmap", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 covid <- read_csv(file = here::here("data/jh_covid19_data_2020-04-06.csv"))
 
@@ -298,7 +324,7 @@ Discuss using either tables or visualizations or both:
 * What is the state of the spread there?
 * What is the relationship between `t` and `confirmed_1e5pop`?
 
-```{r table 1, warning=FALSE, message=FALSE, echo = FALSE}
+```{r table1, warning=FALSE, message=FALSE, echo = FALSE}
 covid19_data %>%
   group_by(country) %>%
   filter(date == "2020-01-22") %>%
@@ -311,13 +337,11 @@ covid19_data %>%
   kable_styling(
     bootstrap_options = "striped")
 
-
-" The $k$ country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries' day 1 starts when the number of confirmed cases reached 548."
-
 ```
 
-```{r}
+As we observe in the table \@ref(tab:table1),the $k$ country is China, with 548 confirmed cases ar the earliest data in the data set. In order to do comparisons, we should create a subset where the countries' day 1 starts when the number of confirmed cases reached 548.
 
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
 # Filtering the data to obtain a subset containing only the first cases reported in the countries
 covid19_data_filtered <- covid19_data %>%
   filter(confirmed >= 548 ) %>%
@@ -327,17 +351,33 @@ covid19_data_filtered <- covid19_data %>%
   mutate(confirmed_1e5pop = confirmed*100000/population)
 ```
 
-```{r table 2, warning=FALSE, message=FALSE, echo = FALSE}
-head(covid19_data_filtered) %>%
-  select(country, date, confirmed,, deaths, population) %>%
+
+
+Many countries do not appear on the subset covid_data_filtered because of the threshold of 548 confirmed cases,\@ref(tab:table1). The measures taken to prevent the covid-19 worldwide have been shared and are common among countries. This preventive measures would have been braked the spread of the virus, making more difficult to reach our threshold of 548. Furthermore, the difference in mean and in protocoles to confirm a case of coronavirus greatly varies among countries in the world. This second barrier is perhaps the greatest to overcome because of the global shortage of testing material. The reported confirmed cases might hide an unknown number of non-tested but positive case to coronavirus (Omitten/hidden cases are like false negative).
+
+```{r table2, warning=FALSE, message=FALSE, echo = FALSE}
+covid19_data_filtered %>%
+  group_by(country)%>%
+  count(country) %>%
+  select(country) %>%
      kable(
     caption = "Glimpse of the countries' day 1 aligned"
        ) %>%
   kable_styling(
     bootstrap_options = "striped")
 ```
+The countries removed of our panel due to our filtering are 39: Algeria, Argentina, Armenia, Azerbaijan, Bahrain, Belarus, Bosnia and Herzegovina, Cameroon, Colombia, Croatia, Dominican Republic, Egypt, Estonia, Hungary, India, Indonesia, Iraq, Kazakhstan, Kuwait, Lithuania, Mexico, Moldova, Morocco, New Zealand, North Macedonia, Panama, Peru, Philippines, Qatar, Romania, Russia, Saudi Arabia, Serbia, Singapore, Slovenia, South Africa, Tunisia, Ukraine, United Arab Emirates.
 
-```{r fig-9, fig.cap="Figure 9", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+The countries included in the filtered data are 28 : Australia, Austria, Belgium, Brazil, Canada, China, Czechia, Denmark, France, Germany, Iran, Ireland, Israel, Italy, Japan, South Korea, Luxembourg, Malaysia, Netherlands, Norway, Pakistan, Portugal, Spain, Sweden, Switzerland, Turkey, United Kingdom, USA. As we can observe in the table \@ref(tab:table2).
+
+
+
+
+To better understand the trend of the subset of countries, we do similar plots as above.
+
+China, France, Germany, Iran, Italy, Spain and USA appear in the Figure \@ref(fig:fig-9), which looks like the the Figure \@ref(fig:fig-3), plot for regions. Without doing the necessary statistical computation and rather jeepoing at an assumption, those countries might be served as proxy for their region.
+
+```{r fig-9,fig.cap="Country with more thab 50000 confrimed case", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 # plot of the evolution of the number of case
 covid19_data_filtered %>% 
   filter(confirmed >= 50000) %>%
@@ -359,7 +399,7 @@ covid19_data_filtered %>%
     subtitle = "The evolution of confirmed cases in the 7 most impacted countries")
 ```
 
-```{r fig-10, fig.cap="Figure 10", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+```{r fig-10,fig.cap="Country with more than 50000 confirmed case", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 # same plot but in proportion to the number of habitant 
 covid19_data_filtered %>% 
   filter(confirmed>=50000) %>%
@@ -380,9 +420,10 @@ covid19_data_filtered %>%
     subtitle = "The evolution of confirmed cases in the 7 most impacted countries" )
 ```
 
-" Many countries do not appear on the subset covid_data_filtered because of the threshold of 548 confirmed cases. The measures taken to prevent the covid-19 worldwide have been shared and are common among countries. This preventive measures would have been braked the spread of the virus, making more difficult to reach our threshold of 548. Furthermore, the difference in mean and in protocoles to confirm a case of coronavirus greatly varies among countries in the world. This second barrier is perhaps the greatest to overcome because of the global shortage of testing material. The reported confirmed cases might hide an unknown number of non-tested but positive case to coronavirus (Omitten/hidden cases are like false negative).
+The Figure \@ref(fig:fig-10) illustrate the spread of the COVID-19 per 100'000 inhabitants. Because the filtered countires vary in population size, the start of their curve varies as well (because it is relative to the threshold of 548 confirmed cases). Again, USA is one of the unfortunate leader in the expansion of COVID-19 by confirmed cases, but preceded by Spain.
 
-The countries removed of our panel due to our filtering are 39: Algeria, Argentina, Armenia, Azerbaijan, Bahrain, Belarus, Bosnia and Herzegovina, Cameroon, Colombia, Croatia, Dominican Republic, Egypt, Estonia, Hungary, India, Indonesia, Iraq, Kazakhstan, Kuwait, Lithuania, Mexico, Moldova, Morocco, New Zealand, North Macedonia, Panama, Peru, Philippines, Qatar, Romania, Russia, Saudi Arabia, Serbia, Singapore, Slovenia, South Africa, Tunisia, Ukraine, United Arab Emirates.
 
-The countries included in the filtered data are 28 : Australia, Austria, Belgium, Brazil, Canada, China, Czechia, Denmark, France, Germany, Iran, Ireland, Israel, Italy, Japan, South Korea, Luxembourg, Malaysia, Netherlands, Norway, Pakistan, Portugal, Spain, Sweden, Switzerland, Turkey, United Kingdom, USA
-"
+
+
+
+

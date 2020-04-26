@@ -47,8 +47,15 @@ Then:
 * Present the predictions of the model. What is the estimated final size of the epidemic and infection rate in Switzerland?
 
 
-The prediction shows that the final size of the confirmed case is about 21'500 cases, with an infection rate of 0.246%.
-```{r table 3, warning=FALSE, message=FALSE, echo = FALSE}
+
+ 
+ As explained above, K is the final number of cases confirmed of convid-19 in Switzerland and R the death rate associated to this virus in this country.
+
+ The table \@ref(tab:table3) showa that the final estimation for K 21'500 cases with a standard deviation of 373 cases. The p-value of 2.909e-27 is largely under 0.1%, which makes our model significant at a level of 99.9%. 
+Concerning R, we get an 24.60% of death rate with a standard error of 0.00316. The p-value associated is significant at 99.9%.
+
+
+```{r table3, warning=FALSE, message=FALSE, echo = FALSE}
 covid19_ch <- covid19_data_filtered %>% filter(country=="Switzerland")
 broom::tidy(logistic_model(covid19_ch))  %>%
      kable(
@@ -59,7 +66,10 @@ broom::tidy(logistic_model(covid19_ch))  %>%
 ```
 
 
-```{r table 4, warning=FALSE, message=FALSE, echo = FALSE}
+The model stops at the day 25.
+In the table \@ref(tab:table4), we observe that the total number of cases is 20'162.34, we thus expect to have 20'163 confirmed cases of coronavirus after 25 days. The data for Switzerland reports 21'100 confirmed cases of convid-19 for the 25th day. The model is quite reliable, even if the prediction is under the observed value. In the medical field, we prefer overestimate than underestimate, because the risk associated to overestimation is lower than the inverse. We would have preferred a higher number than 21'100. 
+
+```{r table4, warning=FALSE, message=FALSE, echo = FALSE}
 augment_model <-broom::augment(logistic_model(covid19_ch))
 broom::augment(logistic_model(covid19_ch)) %>% print(n=10) %>%
      kable(
@@ -70,27 +80,34 @@ broom::augment(logistic_model(covid19_ch)) %>% print(n=10) %>%
 ```
 
 
-In this following plot, we observe  the fitted curve, as well as observed data points
-```{r fig-12, fig.cap="Figure 12", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+However, the fitted curves represents well the observed line, as we notice in the Figure \@ref(fig:fig-12). We note some slight differences what matches the residuals' plot \@ref(fig:fig-13), presenting their increasing variance through time. According to the trend of the fitted curve, we might expect that the number of cases qould grow at a lowest rates than between th 5th and 13th day, where the slope is slanted. We conclude that the model represents well the evolution of cases on the time span of the data set, but can't be used for predicting number of cases among this time laps, or at the expense of goodness of fit: it would underestimate the predicted values.
+
+```{r fig-12, fig.cap="Plot of fitted vs observed values", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 augment_model %>% ggplot() +
   geom_line(aes(x=t, y= confirmed, col="Observed")) +
   geom_line(aes(x=t, y= .fitted, col="Fitted" )) +
   labs(title = "Well goodness-of fit", subtitle = "Between the observed and fitted value", x= "Time period",y= "Confirmed people", col= "Model")
 ```
-The 2 curves are close, which mean that our predictions are well estimate, regarding are true value.
 
 
-In order to well assess our model, we pot the residuals of the mode.
 
-```{r fig-13, fig.cap="Figure 13", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
-logistic_model(covid19_ch)
+Once our logistic model applied, we consider the residuals given by the difference between fitted abd observed values.
+The figure \@ref(fig:fig-13) points out the residuals' variance increasing over time. It means that our model fits less and less well the observed data.
+A good model has normally no pattern in its residuals, which is not the case here. If we decide to use a model showing a similar pattern, the person must be aware that those model is not well fitted to the data, even if some insight could be caught by it. We will use the our model to pursue our analysis, so we have to remind its limits, somehow stronger than other models with a better goodness-of-fit-
 
-ggplot(augment_model) + 
-  geom_point(aes(x=.fitted, y=.resid)) +
+A last information is that the residuals have this pendulum trend which increases overtime. It assumes that the error margin would be greater over time.
+
+```{r fig-13, fig.cap="Residuals plot", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
+augment_model %>% 
+  ggplot(aes(x=t,y=.resid)) + 
+  geom_hline(yintercept = 0, colour = "bisque3", size= 1) + 
+  geom_line() + 
   labs(
-    title = "Residuals increase regarding the increase of our prediction",
-    x= "Prediction",
-    y= "Residuals"
-  )
+    x = "Day", 
+    y = "Residuals",
+    title = "The variance of the model's residuals increases by time",
+    subtitle = "Residuals's variation for Switzerland on 25 days",
+    caption = "covid19_ch data")
+
 ```
-We observe a pretty well prediction when our fitted value are small, but when they increase, our residuals increase too.

@@ -170,9 +170,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Because, for some countries, the optimization method might not converge, you can use <code>possibly()</code> or something similar.
 For which country does the optimization fail ?
 Assess the goodness-of-fit of the logistic model in the various countries.</p>
+<p>We apply the logistic model on all countries included in the dataset. The model returns for each country the specific value for <span class="math inline">\(K_{i}\)</span> (the final number of cases and for <span class="math inline">\(R_{i}\)</span> (the infection rate). Please find below the results for our 28 countries.</p>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-(#tab:table 5)List of the K and R for each country of our model
+<span id="tab:table5">Table 3.1: </span>List of the first countries touched by the pandemic
 </caption>
 <thead>
 <tr>
@@ -1145,16 +1146,16 @@ R
 </tr>
 </tbody>
 </table>
-<p>In this table, we observe, for each country, the number of confirmed case with the “K” and the infection rate with the “K”.
+<p>In the table <a href="modeling-the-spread-of-covid-19-worldwide.html#tab:table5">3.1</a>, we observe, for each country, the number of confirmed case with the “K” and the infection rate with the “R”.
 We notice that the Japan doesn’t figure in this table.</p>
-In order to assess the goodness-of-fit of the logistic model in the various countries, we plot the residuals of our predictions.
+In order to evaluate the results of the logistic model on all the data set, we would confront the predictions of the model with the observed values of the dataset. Considering the residuals of a model is one of the step for assessing its goodness-of-fit.
+In the figure <a href="modeling-the-spread-of-covid-19-worldwide.html#fig:fig-14">3.1</a>, we plot the evolution of the residuals (difference between predictions and observed values).
 <div class="figure" style="text-align: center"><span id="fig:fig-14"></span>
-<img src="_main_files/figure-html/fig-14-1.png" alt="Figure 14" width="80%" />
+<img src="_main_files/figure-html/fig-14-1.png" alt="The logistic model" width="80%" />
 <p class="caption">
-Figure 3.1: Figure 14
+Figure 3.1: The logistic model
 </p>
 </div>
-<p>In this plot, we observe that the resdiduals increase with the time dimension, which it’s not surprising.</p>
 </div>
 <div id="fitted-parameters-and-long-term-predictions" class="section level2">
 <h2><span class="header-section-number">3.2</span> Fitted parameters and long-term predictions</h2>
@@ -1167,29 +1168,32 @@ Thus, predict the evolution of this number (i.e., by dividing your predictions f
 <li>Format the fitted parameters using <code>broom::tidy()</code>.</li>
 <li>For the long-term predictions, you can use <code>data = data.frame(t = 0:50)</code> in <code>add_predictions()</code>.</li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:fig-15"></span>
-<img src="_main_files/figure-html/fig-15-1.png" alt="Figure 15" width="80%" />
-<p class="caption">
-Figure 3.2: Figure 15
-</p>
-</div>
-<p>In this plot, we observe an increase with the time regarding our predicted confirmed case.</p>
-But in order to better undersant which curve correspond to which country, we add the country name for each curve.
+<p>After the parametrization of the model, i.e. where t = 50, we plot the predictions of confirmed cases.
+We observe again smoother curves than the observed ones of the dataset.</p>
+<p>We decided to focus on the first ten countries with the highest number of confirmed cases, namely China, France, Germany, Iran, Italy, Spain, Switzerland, Turkey, United Kingdom and USA, as we observe in the figure <a href="modeling-the-spread-of-covid-19-worldwide.html#fig:fig-16">3.2</a></p>
+<p>The model depicts well the strong preventive measures imposed on the Chinese population for preventing an acceleration in the contamination and marginal infections. As soon as about 20 days were spent, China’s curve flattens, so did its curve in the reality, as previously seen in the data set (but again with regards to the data given by China.)</p>
+<p>The curves of Spain, Italy, France and Germany are above the predicted cases of China and this is caused in reality by the slowliness of the Occidental governments’ reactions and the culture of each countries. The predictions seems to reproduce the patterns observed in reality, in spite of the tendancy of the residuals to increase over time.</p>
+<p>Iran, Switzerland, United Kingdom and Turkey take part of another cluster of countries, whose predicted confirmed cases are lower than China’s ones, and much more flat. Those countries have been strongly touched by the coronavirus, but the spread was contained more effectively. However, we must remind that this cluster reached their starting day (day when they reached 548 confirmed cases) later than China or the cluster formed by Spain, Italy, Germany, France. The data visualized is the predictions after having reached 548 cases and the time span required to reach those 548 confirmed cases might have taken some time which allowed them to apply preventive measures, reason why their curves flattened. We could consider this point as a contained expansion of the covid-19, even if those countries are in the top 10 of the countries the most affected by covid-19.</p>
+<p>Finally, USA skyrocks the contamination prediction of covid-19. Later touched in reality, the logistic model presents well the exponential character with early non-restrictive measures applied preventively against covid-19. The laisser-faire of the American government has faced an explosion of confirmed cases, what puts USA in a sanitary crisis, which the other countries only have a glimpse.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-16"></span>
-<img src="_main_files/figure-html/fig-16-1.png" alt="Figure 16" width="80%" />
+<img src="_main_files/figure-html/fig-16-1.png" alt="Prediction of the evolution" width="80%" />
 <p class="caption">
-Figure 3.3: Figure 16
+Figure 3.2: Prediction of the evolution
 </p>
 </div>
-<p>Therefore, we notice that the exponentital curve correspond to the USA.</p>
-To better evaluate the evolution, we poursuive the same analysis but regarding to the population if each country, in order to better visualize the problematic.
+What if we look now to the confirmed cases as a proportion of the national population? In fact, we have in our top 10 a strong variation in the population size and rescaling the data might give other insights…
 <div class="figure" style="text-align: center"><span id="fig:fig-17"></span>
-<img src="_main_files/figure-html/fig-17-1.png" alt="Figure 17" width="80%" />
+<img src="_main_files/figure-html/fig-17-1.png" alt="Prediction regarding the population" width="80%" />
 <p class="caption">
-Figure 3.4: Figure 17
+Figure 3.3: Prediction regarding the population
 </p>
 </div>
-<p>When we look the number of case proportional to the population, we notice that the plot isn’t the same as before, and that now the exponential curve corresponf to Luxembrug and Iceland.</p>
+<p>As we see, the groups we discuss about previously hardly remain, as we could expect.</p>
+<p>First, China is no more in our top 10 panel, since this country has the largest population on earth. If China was appearant, the worldwide covid-19 crisis would be radically worst!</p>
+<p>As we can observe in the figure <a href="modeling-the-spread-of-covid-19-worldwide.html#fig:fig-17">3.3</a>,the two most touched countries are Luxembourg and Iceland, two countries with a very small size of population. Their effective confirmed cases are above 0.4% of their population, which is concerning and mostly when we consider the slope of the curve: a fast increasing expansion of the covid-19 among their population. In 15 days, the infected population went from 0.1 to 0.4%.</p>
+<p>Spain, Switzerland and Italy are three countries reaching (or almost) the 0.2 % of infection among their population. We know that the situation of Italy and Spain was worrying with regards to the medias and the expansion of the confirmed cases in the plot above. Yet, those numbers rescaled with respect to the population tell more about the severity the sanitary crisis is. Spain and Italy have respectively more than 45 millions and 60 millions of inhabitants, whereas Switzerland has “only” slightly more than 8 millions.</p>
+<p>Finally, the last cluster is formed by other European countries: Austria, Belgium, France Germany and Portugal. France and Germany remain in our top 10.</p>
+<p>What is striking is that our top 10 of countries ranked by their proportion of confirmed cases on their population are in Europa. Europa is the continent the most “touched” by the coronavirus, or should we say that the European governments failed to protect their population by preventive measures and failed to contain the expansion once the covid-19 was within the national borders by applying an under-effective sanitary plan.</p>
 
 </div>
 </div>

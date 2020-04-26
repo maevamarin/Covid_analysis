@@ -9,7 +9,10 @@ Because, for some countries, the optimization method might not converge, you can
 For which country does the optimization fail ?
 Assess the goodness-of-fit of the logistic model in the various countries.
 
-```{r table 5, warning=FALSE, message=FALSE, echo = FALSE}
+
+We apply the logistic model on all countries included in the dataset. The model returns for each country the specific value for $K_{i}$ (the final number of cases and for  $R_{i}$ (the infection rate). Please find below the results for our 28 countries.
+
+```{r table5, warning=FALSE, message=FALSE, echo = FALSE}
 
 
 by_country <- covid19_data_filtered %>%
@@ -29,32 +32,33 @@ tmp %>%
   unnest(tdy) %>%
   select(country,term,estimate,std.error) %>%
   kable(
-    caption = "List of the K and R for each country of our model"
+    caption = "List of the first countries touched by the pandemic"
        ) %>%
   kable_styling(
     bootstrap_options = "striped")
 ```
 
-In this table, we observe, for each country, the number of confirmed case with the "K" and the infection rate with the "K". 
+In the table \@ref(tab:table5), we observe, for each country, the number of confirmed case with the "K" and the infection rate with the "R". 
 We notice that the Japan doesn't figure in this table. 
 
 
-In order to assess the goodness-of-fit of the logistic model in the various countries, we plot the residuals of our predictions. 
-```{r fig-14, fig.cap="Figure 14", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+In order to evaluate the results of the logistic model on all the data set, we would confront the predictions of the model with the observed values of the dataset. Considering the residuals of a model is one of the step for assessing its goodness-of-fit.
+ In the figure \@ref(fig:fig-14), we plot the evolution of the residuals (difference between predictions and observed values). 
+```{r fig-14, fig.cap="The logistic model", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 fitted_model %>%
   ggplot(aes(t,.resid)) +
   geom_line(aes(colour=country), alpha=1/3) +
   labs(
-    title = "Increase of the error with the time dimension",
-    subtitle = "Prediction of the evolution - COVID-19",
-    x= "Time dimension(day)",
+    title = "Residuals observed by coutry tend to increase over time",
+    subtitle = "Residuals of prediction model on the COVID-19's spread",
+    x= "Time dimension (day)",
     y="Residuals",
     colour="Country"
   )
 
 ```
-In this plot, we observe that the resdiduals increase with the time dimension, which it's not surprising.
+
 
 ## Fitted parameters and long-term predictions
 
@@ -68,45 +72,51 @@ Hints:
 * Format the fitted parameters using `broom::tidy()`.
 * For the long-term predictions, you can use `data = data.frame(t = 0:50)` in `add_predictions()`.
 
-```{r fig-15, fig.cap="Figure 15", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
+
+
+After the parametrization of the model, i.e. where t = 50,  we plot the predictions of confirmed cases.
+We observe again smoother curves than the observed ones of the dataset.
+
+We decided to focus on the first ten countries with the highest number of confirmed cases, namely China, France, Germany, Iran, Italy, Spain, Switzerland, Turkey, United Kingdom and USA, as we observe in the figure \@ref(fig:fig-16)
+
+The model depicts well the strong preventive measures imposed on the Chinese population for preventing an acceleration in the contamination and marginal infections. As soon as about 20 days were spent, China's curve flattens, so did its curve in the reality, as previously seen in the data set (but again with regards to the data given by China.)
+
+The curves of Spain, Italy, France and Germany are above the predicted cases of China and this is caused in reality by the slowliness of the Occidental governments' reactions and the culture of each countries. The predictions seems to reproduce the patterns observed in reality, in spite of the tendancy of the residuals to increase over time.
+
+Iran, Switzerland, United Kingdom and Turkey take part of another cluster of countries, whose predicted confirmed cases are lower than China's ones, and much more flat. Those countries have been strongly touched by the coronavirus, but the spread was contained more effectively. However, we must remind that this cluster reached their starting day (day when they reached 548 confirmed cases) later than  China or the cluster formed by Spain, Italy, Germany, France. The data visualized is the predictions after having reached 548 cases and the time span required to reach those 548 confirmed cases might have taken some time which allowed them to apply preventive measures, reason why their curves flattened. We could consider this point as a contained expansion of the covid-19, even if those countries are in the top 10 of the countries the most affected by covid-19.
+
+Finally, USA  skyrocks the contamination prediction of covid-19. Later touched in reality, the logistic model presents well the exponential character with early non-restrictive measures applied preventively against covid-19. The laisser-faire of the American government has faced an explosion of confirmed cases, what puts USA in a sanitary crisis, which the other countries only have a glimpse.
+
+
+
+```{r fig-16, fig.cap="Prediction of the evolution", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
 fitted_model_2<- fitted_model %>% filter(t<=50)
 
 best_in_each_fitted <- fitted_model_2 %>%
-                      group_by(country) %>% filter(row_number(desc(.fitted ))==1) 
+  group_by(country) %>% 
+  filter(row_number(desc(.fitted )) == 1) %>%
+  arrange(desc(.fitted)) %>%
+  head(10)
 
-
-fitted_model_2 %>%
-  ggplot(aes(t,.fitted)) +
-  geom_line(aes(colour=country),alpha=1/3) +
-  labs( 
-    title = "Exponential confirmed case prediction for the USA",
-    subtitle ="Prediction of the evolution COVID-19",
-    x= "Day",
-    y="Prediction for the confirmed case") 
-
-
-```
-In this plot, we observe an increase with the time regarding our predicted confirmed case.
-
-
-But in order to better undersant which curve correspond to which country, we add the country name for each curve.
-```{r fig-16, fig.cap="Figure 16", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 
 fitted_model_2 %>%
   ggplot(aes(t,.fitted)) +
   geom_line(aes(colour=country),alpha=1/3) +
   geom_text(aes(label=country), data = best_in_each_fitted) +
   labs( 
-    title = "Exponential confirmed case prediction for the USA",
-    subtitle ="Prediction of the evolution COVID-19",
+    title = "Predicted cases seems to increases at a lower rate \nexcept for USA",
+    subtitle ="Prediction of the confirmed cases of COVID-19\n with the logistic model",
     x= "Day",
     y="Prediction for the confirmed case") 
 
 ```
-Therefore, we notice that the exponentital curve correspond to the USA.
 
-To better evaluate the evolution, we poursuive the same analysis but regarding to the population if each country, in order to better visualize the problematic.
-```{r fig-17, fig.cap="Figure 17", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
+
+
+What if we look now to the confirmed cases as a proportion of the national population? In fact, we have in our top 10 a strong variation in the population size and rescaling the data might give other insights...
+```{r fig-17, fig.cap="Prediction regarding the population", out.width="80%", fig.asp=.75,fig.align='center', warning=FALSE, message=FALSE, echo = FALSE}
 joined<-left_join(
   covid19_data_filtered %>% select(population,country),
   fitted_model_2 %>% select(-data,-log_model),
@@ -116,18 +126,30 @@ joined<-left_join(
 
 best_in_each <- joined %>%
                 group_by(country) %>%
-                filter(row_number(desc(ratio_pop))==1)
+                filter(row_number(desc(ratio_pop))==1) %>%
+                arrange(desc(ratio_pop))%>%
+                head(10)
 
 joined %>% ggplot(aes(t,ratio_pop))+
   geom_line(aes(colour=country),alpha=1/3)+
   geom_text(aes(label=country), data = best_in_each)+
   labs(
-    title = "Luxembourg and Icelan \nexponential curve for the COVID-19",
-    subtile ="Prediction for the confirmed case relative \n to the population",
+    title = "Luxembourg & Iceland\npreviously outsidersleaders in infection rate",
+    subtile ="Prediction of the bypercentatage of population infected\nby COVID-19 with the logistic model",
     x= "Day",
     y="Prediction of the confirmed case/Population",
     colour="Country"
     ) 
 
 ```
-When we look the number of case proportional to the population, we notice that the plot isn't the same as before, and that now the exponential curve corresponf to  Luxembrug and Iceland.
+As we see, the groups we discuss about previously hardly remain, as we could expect.
+
+First, China is no more in our top 10 panel, since this country has the largest population on earth. If China was appearant, the worldwide covid-19 crisis would be radically worst!
+
+As we can observe in the figure \@ref(fig:fig-17),the two most touched countries are Luxembourg and Iceland, two countries with a very small size of population. Their effective confirmed cases are above 0.4% of their population, which is concerning and mostly when we consider the slope of the curve: a fast increasing expansion of the covid-19 among their population. In 15 days, the infected population went from 0.1 to 0.4%.
+
+Spain, Switzerland and Italy are three countries reaching (or almost) the 0.2 % of infection among their population. We know that the situation of Italy and Spain was worrying with regards to the medias and the expansion of the confirmed cases in the plot above. Yet, those numbers rescaled with respect to the population tell more about the severity the sanitary crisis is. Spain and Italy have respectively more than 45 millions and 60 millions of inhabitants, whereas Switzerland has "only" slightly more than 8 millions.
+
+Finally, the last cluster is formed by other European countries: Austria, Belgium, France Germany and Portugal. France and Germany remain in our top 10. 
+
+What is striking is that our top 10 of countries ranked by their proportion of confirmed cases on their population are in Europa. Europa is the continent the most "touched" by the coronavirus, or should we say that the European governments failed to protect their population by preventive measures and failed to contain the expansion once the covid-19 was within the national borders by applying an under-effective sanitary plan.
