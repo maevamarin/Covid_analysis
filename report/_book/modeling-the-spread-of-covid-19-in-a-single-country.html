@@ -753,19 +753,19 @@ C_0
 </table>
 <p>However, the fitted curves represents well the observed line, as we notice in the Figure <a href="modeling-the-spread-of-covid-19-in-a-single-country.html#fig:fig-12">4.1</a>. We note some slight differences what matches the residuals’ plot <a href="modeling-the-spread-of-covid-19-in-a-single-country.html#fig:fig-13">4.2</a>, presenting their increasing variance through time. According to the trend of the fitted curve, we might expect that the number of cases qould grow at a lowest rates than between th 5th and 13th day, where the slope is slanted. We conclude that the model represents well the evolution of cases on the time span of the data set, but can’t be used for predicting number of cases among this time laps, or at the expense of goodness of fit: it would underestimate the predicted values.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-12"></span>
-<img src="_main_files/figure-html/fig-12-1.png" alt="Figure 12" width="80%" />
+<img src="_main_files/figure-html/fig-12-1.png" alt="Plot of fitted vs observed values" width="80%" />
 <p class="caption">
-Figure 4.1: Figure 12
+Figure 4.1: Plot of fitted vs observed values
 </p>
 </div>
 <p>Once our logistic model applied, we consider the residuals given by the difference between fitted abd observed values.
 The figure <a href="modeling-the-spread-of-covid-19-in-a-single-country.html#fig:fig-13">4.2</a> points out the residuals’ variance increasing over time. It means that our model fits less and less well the observed data.
 A good model has normally no pattern in its residuals, which is not the case here. If we decide to use a model showing a similar pattern, the person must be aware that those model is not well fitted to the data, even if some insight could be caught by it. We will use the our model to pursue our analysis, so we have to remind its limits, somehow stronger than other models with a better goodness-of-fit-</p>
-<p>A last information is that the residuals have this pendulum trend which increases overtime. It assumes that the error margin woulg be greater over time.</p>
+<p>A last information is that the residuals have this pendulum trend which increases overtime. It assumes that the error margin would be greater over time.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig-13"></span>
-<img src="_main_files/figure-html/fig-13-1.png" alt="Figure 13" width="80%" />
+<img src="_main_files/figure-html/fig-13-1.png" alt="Residuals plot" width="80%" />
 <p class="caption">
-Figure 4.2: Figure 13
+Figure 4.2: Residuals plot
 </p>
 </div>
 
